@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>GoGreen data visualization test</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1');
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        var wrapper = new google.visualization.ChartWrapper({
+          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=A1%3AB3&key=0AtpeV3WMc1Z5dEZma0dfNGpaUnROM2pPT2hoUk92WkE&gid=0&headers=-1',
+          chartType: 'ColumnChart',
+          options:{
+          	title: 'Kalorier forbrent',
+          	animation:{
+          		duration: 300,
+          		easing: 'in'
+          	}
+          },
+          containerId: 'visualization'
+        });
+        wrapper.setRefreshInterval(1);
+        wrapper.draw();
+      }
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+  	<div id="wrapper">
+  		<img src="logo.png" alt="GoGreen" />
+  		<h1>Data visualization test</h1>
+    	<div id="visualization" style="width: 600px; height: 400px; margin:0px auto;"></div>
+  	</div>
+  </body>
+</html>
+​
