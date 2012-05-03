@@ -8,3 +8,8 @@ h1{
 	font: 200% normal "Helvetica Neue", Helvetica, Arial;
 	margin-top: 0px;
 }
+
+span#counter{
+	font-weight: bold;
+	font-size: 150%;
+}
