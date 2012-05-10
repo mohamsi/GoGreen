@@ -10,7 +10,7 @@ SpreadsheetService service;  //Holds link to all your spreadsheets
 WorksheetEntry worksheet;  //Holds link to the sensor log spreadsheet
 String uname = "g0gr33nuio@gmail.com";  //Your google account user name
 String pwd = "G0Gr33nUIO";  //Your google account password
-String spreadsheet_name = "go green";  //Name of the spreadsheet you want to write data to.  Must match exactly, including case.
+String spreadsheet_name = "go green database";  //Name of the spreadsheet you want to write data to.  Must match exactly, including case.
 int spreadsheet_idx = 0; //Index for the "sensor log spreadsheet
 
 
