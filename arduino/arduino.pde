@@ -108,8 +108,9 @@ void loop() {
     
     if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0)) {
       total = total++;
-      Serial.print("Passed second. \nTotal: ");
-      Serial.println(total);
+      //Serial.print("Passed second. \nTotal: ");
+      //Serial.println(total);
+	Serial.println("1");
       //passedFirst = passedFirst--;
       //hasPassed = false;
       bufferCounter--;
