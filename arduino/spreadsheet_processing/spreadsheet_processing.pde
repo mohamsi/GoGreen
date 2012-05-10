@@ -86,9 +86,15 @@ void draw() {
       println("sending");
       transmitData(1);
     } else {
-      println("other value " + buff);
+      //println("other value " + buff);
     }
   }
   buff = "";
 }
 
+void keyPressed() {  
+  if (key == '1') {
+    transmitData(1);
+    println("sending on keypress");
+  }
+}
