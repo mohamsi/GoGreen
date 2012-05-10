@@ -1,144 +1,137 @@
 const int sonarPin = 10;
-const int sensorPin = sonarPin;
+const int sonarPin2 = 6;
   
- int emptyStair;
-int threshold;
-int lastValue; 
-
 int total = 0;
+int emptyStair;
+int emptyStair2;
+int threshold;
+int threshold2;
+int lastValue; 
+int lastValue2;
+int deadSpace = 20;
+int passedFirst = 0;
+long previousMillis = 0;
+long interval = 1000;
 
-int rangevalue[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0};
-long pulse;
-int modE;
-int arraysize = 5;
+long buffer[6] = {0,0,0,0,0,0};
+int bufferCounter = 0;
+
 
 void setup() {
-Serial.begin(9600); 
-    Serial.print("Calibrating.\n");
+  
+  Serial.begin(9600); 
+  Serial.print("Calibrating.\n");
   
   while (millis () < 4000){
-    long d=getDistance();
+    long d=getD(sonarPin);
+    long d2 = getD(sonarPin2);
     emptyStair = d;
+    emptyStair2 = d2;
     lastValue = d;
+    lastValue2 = d2;
   }
   
-  threshold = emptyStair - 0;
+  threshold = emptyStair - deadSpace;
+  threshold2 = emptyStair2 - deadSpace;
   Serial.print("Range: ");
   Serial.print(emptyStair);
-  Serial.print("\nThreshold: ");
-  Serial.print(threshold);
+  Serial.print("\nThreshold (A): ");
+  Serial.println(threshold);
+  Serial.print("Threshold (B): ");
+  Serial.println(threshold2);
+  
 }
 
-
-long getDistance(){
-    // establish variables for duration of the ping, 
+int getD(int sonarPin) {
   
-    // and the distance result in centimeters:
-  
-    for (int i = 0; i < arraysize; i++) {
-            
-          
         long duration,cm;
-      
-        // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
-      
         pinMode(sonarPin, OUTPUT);
-      
         digitalWrite(sonarPin, LOW);
-      
         delayMicroseconds(2);
-      
         digitalWrite(sonarPin, HIGH);
-      
         delayMicroseconds(5);
-      
         digitalWrite(sonarPin, LOW);
-      
-        // The same pin is used to read the signal from the EZ4: a HIGH
-      
-        // pulse whose duration is the time (in microseconds) from the sending
-      
-        // of the ping to the reception of its echo off of an object.
-      
         pinMode(sonarPin, INPUT);
-      
         duration = pulseIn(sonarPin, HIGH);
-      
-        // convert the time into a distance
-      
         cm = microsecondsToCentimeters(duration);
-        rangevalue[i] = cm;
-    }
-  //Serial.print("Unsorted: ");
-  //printArray(rangevalue,arraysize);
-  isort(rangevalue,arraysize);
-  //Serial.print("Sorted: ");
-  //printArray(rangevalue,arraysize);
-  modE = mode(rangevalue,arraysize);
-  //Serial.print("The mode/median is: ");
-  //Serial.print(modE);
-  //Serial.println();
-
-    return modE;
+        return cm;
+        
 }
 
-void loop()
+void addToBuffer() {
+  int i;
+  for ( i = 0; i < 6; i++ ) {
+      if (buffer[i] == 0) {
+              buffer[i] = millis();
+              bufferCounter++;
+              break;
+      }
+  }
+}
 
-{
-
-
-  long cm = getDistance();
-  //Serial.print(cm);
-
-  //Serial.print("cm");
-
-  //Serial.println();
+void loop() {
+  
+  int i;
+  for ( i = 0; i < 6; i++ ) {
+      if (buffer[i] != 0) {
+          if ( millis() - buffer[i] > 2000 ) {
+             // Serial.println("removing from buffer");
+              buffer[i] = 0;
+              bufferCounter--;
+          }
+      }
+  }
+  
+  
+  long cm = getD(sonarPin);
+  long cm2 = getD(sonarPin2);
+  
+  /* SPAM BLOCK
+  
+  Serial.print("A: ");
+  Serial.println(cm);
+  
+  Serial.print("B: ");
+  Serial.println(cm2);
+  
+  */ // SPAM BLOCK 
+  
     if (lastValue < threshold && cm >= threshold) {
-      total++;
-      Serial.println("1");
+      //passedFirst++;
+      addToBuffer();
+      //Serial.print("Passed first. \n");
+      //Serial.println(bufferCounter);
+      //Serial.println(passedFirst);
+      
+      
     } 
+    
+    if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0)) {
+      total = total++;
+      Serial.print("Passed second. \nTotal: ");
+      Serial.println(total);
+      //passedFirst = passedFirst--;
+      //hasPassed = false;
+      bufferCounter--;
+      buffer[0] = 0;
+    }
+    
+    lastValue2 = cm2;
     lastValue = cm;
-  delay(100);
+    
+    // delay(20);
   
 }
-
-long microsecondsToCentimeters(long microseconds)
-
-{
-
-  // The speed of sound is 340 m/s or 29 microseconds per centimeter.
-
-  // The ping travels out and back, so to find the distance of the
-
-  // object we take half of the distance travelled.
-
-  return microseconds / 29 / 2;
-
-}
-
-/*-----------Functions------------*/ //Function to print the arrays.
-void printArray(int *a, int n) { 
-
-
-  for (int i = 0; i < n; i++)
-  {
-    Serial.print(a[i], DEC);
-    Serial.print(' ');
-  }
-
-  Serial.println();
-} 
-
 
 //Sorting function
 // sort function (Author: Bill Gentles, Nov. 12, 2010)
-void isort(int *a, int n){
+void isort(long *a, int n){
 // *a is an array pointer function
 
 
   for (int i = 1; i < n; ++i)
   {
-    int j = a[i];
+    long j = a[i];
     int k;
     for (k = i - 1; (k >= 0) && (j < a[k]); k--)
     {
@@ -149,45 +142,8 @@ void isort(int *a, int n){
 } 
 
 
-//Mode function, returning the mode or median.
-int mode(int *x,int n){ 
 
-  int i = 0;
-  int count = 0;
-  int maxCount = 0;
-  int mode = 0;
-  int bimodal;
-  int prevCount = 0;
-
-  while(i<(n-1)){
-
-    prevCount=count;
-    count=0;
-
-    while(x[i]==x[i+1]){
-
-      count++;
-      i++;
-    }
-
-    if(count>prevCount&count>maxCount){
-      mode=x[i];
-      maxCount=count;
-      bimodal=0;
-    }
-    if(count==0){
-      i++;
-    }
-    if(count==maxCount){//If the dataset has 2 or more modes.
-      bimodal=1;
-    }
-    if(mode==0||bimodal==1){//Return the median if there is no mode.
-      mode=x[(n/2)];
-    }
-    return mode;
-  }
-} 
-
-
-
+long microsecondsToCentimeters(long microseconds) {
+  return microseconds / 29 / 2;
+}
 
