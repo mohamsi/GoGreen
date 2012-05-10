@@ -71,58 +71,24 @@ void setup() {
     println(e.toString());
   }
 }
-boolean sent = false;
+
+//boolean sent = false;
 String buff = "";
-int NEWLINE = 10;
-String value;
-//Reads the port everye few seconds and sends the data back to Google
-void draw() {
-  /*
-  (
-  float val = "0.0";
-  if (port.available() > 0) { // If data is available,
-    val = port.read();        // read it and store it in val
-  }
-  //Determine if we need to report the level
-  if ((millis() - oldTime) > reportingInterval) {
-    oldTime = millis();
-    transmitData(val);
-  }      
-  */
- 
+//int NEWLINE = 10;
+//String value;
+
+void draw() { 
   while (port.available() > 0) {
-    //serialEvent(port.read());
     buff = port.readStringUntil('\n');
   }
   if (buff != "") {
     if (buff.trim().equals("1")) {
       println("sending");
       transmitData(1);
-      //buff = "";
     } else {
       println("other value " + buff);
-      //buff = "";
     }
   }
   buff = "";
-  /*
-  if (sent == false) { 
-    transmitData(1);
-    sent = true;
-  }
-  */
 }
 
-/*
-void serialEvent(int serial) {
-  if (serial != NEWLINE) {
-    buff += char(serial);
-  } 
-  else {
-    buff = buff.substring(0, buff.length()-1);
-    value = buff;
-    buff = "";
-    //return output; 
-  }
-}
-*/
