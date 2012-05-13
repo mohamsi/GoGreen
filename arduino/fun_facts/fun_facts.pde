@@ -1,3 +1,5 @@
+import processing.serial.*;
+Serial port;
 PImage defaultImage;
 
 String[] imageFiles = {"1.png","2.png","3.png","4.png"};
@@ -6,12 +8,16 @@ PImage[] images = new PImage[imageCount];
 
 int transparency1;
 
-boolean fading = true;
+boolean fading = false;
+boolean funfacts = false;
 
 PImage currentImage;
 PImage nextImage;
 
 void setup() {
+  String arduinoPort = Serial.list()[1];
+  port = new Serial(this, arduinoPort, 9600); 
+  port.bufferUntil('\n');
   for (int i=0; i<imageCount; i++) {
     images[i] = loadImage(imageFiles[i]);
   }
@@ -25,12 +31,37 @@ void setup() {
   currentImage = defaultImage; 
 }
 
-void draw(){
-  if (fading) {
-    if (nextImage == null) {
-      nextImage = images[getNextImageIndex()];
+String buff = "";
+long timer = millis() - 15000;
+
+void draw() {
+
+  if ( funfacts == false || millis() - timer > 15000 ) {
+  
+    while (port.available() > 0) {    
+      buff = port.readStringUntil('\n');  
     }
-    fadeInImage();
+    if (buff.trim().equals("1")) {
+      println(buff);
+      //funfacts = true;
+      if (!fading && !funfacts) {
+        funfacts = true;
+        fading = true;
+        nextImage = images[getNextImageIndex()];
+      }
+    } else if (!fading && funfacts && buff.trim().equals("0")) {
+      println(buff);
+      funfacts = false;
+      fading = true;
+      nextImage = defaultImage;
+    }
+    buff="";
+    if (fading) {
+  //    if (nextImage == null) {
+  //      nextImage = images[getNextImageIndex()];
+   //   }
+      fadeInImage();
+    }
   }
 }
 
@@ -38,10 +69,12 @@ int getNextImageIndex() {
    return int(random(4));
 }
 
+
 void fadeInImage() {
+ // println("fading");
   if (transparency1 > 0) {
     background(255);
-    transparency1-=5;
+    transparency1-=30;
     tint(255,255,255,transparency1);
     image(currentImage,0,0);
   } else {
@@ -51,5 +84,10 @@ void fadeInImage() {
     currentImage = nextImage;
     nextImage = null;
     fading = false;
+    if(currentImage != defaultImage) {
+      timer = millis();
+    }
+    transparency1 = 255;
+   //println("end fading");
   }
 }
