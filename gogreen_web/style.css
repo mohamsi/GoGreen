@@ -1,0 +1,127 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	font: 100% "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+#wrapper{
+	width: 1440px;
+	height: 900px;
+}
+
+#left{
+	height: 100%;
+	width: 70%;
+	float: left;
+	background: #fff;
+}
+
+#slideshow {
+    position:relative;
+    height:557px;
+    background: repeat-x url('img/left_clear_sky.png');
+    text-align: center;
+}
+
+#slideshow IMG {
+    position:absolute;
+    top:0;
+    left:17;
+    z-index:8;
+    opacity:0.0;
+}
+
+#slideshow IMG.active {
+    z-index:10;
+    opacity:1.0;
+}
+
+#slideshow IMG.last-active {
+    z-index:9;
+}
+
+#right{
+	width: 30%;
+	height: 100%;
+	float: right;
+	background: #ffcf4d;
+}
+
+.counter{
+	height: 33.3%;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+}
+
+.counter h3{
+	font-size: 750%;
+	font-weight: bold;
+	text-shadow: 0px 1px 1px #333333;
+	padding-top: 30px;
+}
+
+.counter p{
+	 color: rgba(0, 0, 0, 0.7);
+	 font-size: 150%;
+	 margin-top: -10px;
+}
+
+#ct_dag{
+	background: repeat-x url('img/ct_dag.png');
+}
+
+#ct_uke{
+	background: repeat-x url('img/ct_uke.png');
+}
+
+#ct_mnd{
+	background: repeat-x url('img/ct_mnd.png');
+}
+
+
+
+
+
+
+
+
