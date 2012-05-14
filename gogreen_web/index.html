@@ -4,20 +4,77 @@
 <title>GoGreen</title>
 <link rel="stylesheet" type="text/css" media="all" href="style.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1');
+    </script>
+    <script type="text/javascript">
+    
+    	// Draws the column chart
+    
+      function drawVisualization() {
+        var wrapper = new google.visualization.ChartWrapper({
+          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=A1%3AB3&key=0AtpeV3WMc1Z5dEZma0dfNGpaUnROM2pPT2hoUk92WkE&gid=0&headers=-1',
+          chartType: 'ColumnChart',
+          options:{
+			backgroundColor: { fill:'transparent' },
+          	animation:{
+          		duration: 300,
+          		easing: 'in'
+          	}
+          },
+          containerId: 'visualization'
+        });
+        wrapper.setRefreshInterval(1);
+        wrapper.draw();
+      }
+      
+      	// Queries a single cell, sends to handleQueryResponse()
+      
+      function realtimeNumber() {
+        var query = new google.visualization.Query(
+            'https://docs.google.com/spreadsheet/tq?range=F2&key=0AtpeV3WMc1Z5dEZma0dfNGpaUnROM2pPT2hoUk92WkE&gid=0&headers=-1');
+        query.setRefreshInterval(1);
+        query.send(handleQueryResponse);
+      }
+      
+      	// Handles the query, sends to #counter
+      
+      function handleQueryResponse(response) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+      
+        var data = response.getDataTable();
+        var element = document.getElementById('counter'); 
+        element.innerHTML = data.getValue(0, 0); 
+      }
+      
+      google.setOnLoadCallback(drawVisualization);
+      realtimeNumber();
+    </script>
 </head>
 <body>
 <script src="js/jquery.js"></script>
-<script src="js/slideshow.js"></script>
+<!--script src="js/slideshow.js"></script-->
 
 <div id="left">
-
-	<div id="slideshow">
-		<img src="img/slideshow/slide1.png" alt="Slide 1" class="active"/>
-		<img src="img/slideshow/slide2.png" alt="Slide 2" />
-		<img src="img/slideshow/slide3.png" alt="Slide 3" />
+	<div id="top">
+		<div id="slideshow"> <!-- We need a way to trigger to change in the dataSourceUrl variable, call draw() with this new data, and present this with a smooth transition. -->
+			<h1>Kalorier forbrent i trappen</h1>
+			<div id="visualization"></div>
+		</div>
+		<div id="bottom">
+			<div id="b_left">
+				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fwww.uio.no" alt="qrcode"  /> <!-- We could probably edit this URL in JS ;) -->
+				<p>http://www.uio.no/</p>
+			</div>
+			<div id="b_right">
+				<img src="img/logo.png" alt="GoGreen logo" />
+			</div>
+		</div>
 	</div>
-	<p>test</p>
-
 </div>
 
 <div id="right">
