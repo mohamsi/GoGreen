@@ -62,8 +62,8 @@ table {
 }
 
 #bottom {
-	width: 720px;
-	margin: -40px auto 0px auto;
+	width: 1080px;
+	margin: 0px auto 0px auto;
 	
 	/* Needs some BIGASS EDITING for final release. AHHHHHH */
 }
@@ -96,8 +96,8 @@ table {
 }
 
 #visualization{
-	width: 960px;
-	height: 600px;
+	width: 1080px;
+	height: 675px;
 	margin: 0px auto;
 }
 
