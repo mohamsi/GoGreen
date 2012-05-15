@@ -1,5 +1,7 @@
-const int sonarPin = 10;
-const int sonarPin2 = 6;
+const int sonarPin = 5;
+const int sonarPin2 = 12;
+
+const int ledPin = 10;
   
 int total = 0;
 int emptyStair;
@@ -17,8 +19,11 @@ long buffer[6] = {0,0,0,0,0,0};
 int bufferCounter = 0;
 
 
+long timerStart = millis();
+//boolean letThereBeLight;
+
 void setup() {
-  
+  pinMode(ledPin,OUTPUT);
   Serial.begin(9600); 
   Serial.print("Calibrating.\n");
   
@@ -69,8 +74,21 @@ void addToBuffer() {
   }
 }
 
+void ledOff () {
+    if (millis() - timerStart > 300) {
+      digitalWrite(ledPin,HIGH);
+    }
+}
+
+void letThereBeLight () {
+//    letThereBeLight = true;
+    timerStart = millis();
+    digitalWrite(ledPin, HIGH);
+}
+    
+    
 void loop() {
-  
+  ledOff();
   int i;
   for ( i = 0; i < 6; i++ ) {
       if (buffer[i] != 0) {
@@ -111,6 +129,7 @@ void loop() {
       //Serial.print("Passed second. \nTotal: ");
       //Serial.println(total);
 	Serial.println("1");
+        letThereBeLight();
       //passedFirst = passedFirst--;
       //hasPassed = false;
       bufferCounter--;
