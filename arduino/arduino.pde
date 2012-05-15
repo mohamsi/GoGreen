@@ -51,6 +51,7 @@ int getD(int sonarPin) {
   
         long duration,cm;
         pinMode(sonarPin, OUTPUT);
+        digitalWrite(ledPin,LOW);
         digitalWrite(sonarPin, LOW);
         delayMicroseconds(2);
         digitalWrite(sonarPin, HIGH);
@@ -76,7 +77,7 @@ void addToBuffer() {
 
 void ledOff () {
     if (millis() - timerStart > 300) {
-      digitalWrite(ledPin,HIGH);
+      digitalWrite(ledPin,LOW);
     }
 }
 
@@ -155,7 +156,7 @@ void isort(long *a, int n){
     int k;
     for (k = i - 1; (k >= 0) && (j < a[k]); k--)
     {
-      a[k + 1] = a[k];
+      a[k + 1] = a[k];|
     }
     a[k + 1] = j;
   }
