@@ -17,6 +17,7 @@
           dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=A1%3AB3&key=0AtpeV3WMc1Z5dEZma0dfNGpaUnROM2pPT2hoUk92WkE&gid=0&headers=-1',
           chartType: 'ColumnChart',
           options:{
+          	title : 'Kalorier forbrent',
 			backgroundColor: { fill:'transparent' },
           	animation:{
           		duration: 300,
@@ -57,12 +58,11 @@
 </head>
 <body>
 <script src="js/jquery.js"></script>
-<!--script src="js/slideshow.js"></script-->
 
 <div id="left">
 	<div id="top">
 		<div id="slideshow"> <!-- We need a way to trigger to change in the dataSourceUrl variable, call draw() with this new data, and present this with a smooth transition. -->
-			<h1>Kalorier forbrent i trappen</h1>
+			<h1>Takk for at du tok trappa!</h1>
 			<div id="visualization"></div>
 		</div>
 		<div id="bottom">
@@ -79,6 +79,10 @@
 
 <div id="right">
 
+	<div id="ct_title">
+		<p>Tatt trappen:</p>
+	</div>
+
 	<div id="ct_dag" class="counter">
 		<h3>1000</h3>
 		<p>I dag</p>
@@ -91,7 +95,7 @@
 	
 	<div id="ct_mnd" class="counter">
 		<h3>1000</h3>
-		<p>Denne måneden</p>
+		<p>Totalt</p>
 	</div>
 	
 </div>
