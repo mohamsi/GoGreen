@@ -24,6 +24,8 @@ long timerStart = millis();
 
 void setup() {
   pinMode(ledPin,OUTPUT);
+  digitalWrite(ledPin,LOW);
+        
   Serial.begin(9600); 
   Serial.print("Calibrating.\n");
   
@@ -47,11 +49,35 @@ void setup() {
   
 }
 
+int pingPinFancy = 3; //trigger
+int inPinFancy = 2; //echo
+long getDistanceFancy() {
+  long duration, inches, cm;
+ //Serial.
+  //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
+  // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+  pinMode(pingPinFancy, OUTPUT);
+  digitalWrite(pingPinFancy, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pingPinFancy, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pingPinFancy, LOW);
+ 
+  // The same pin is used to read the signal from the PING))): a HIGH
+  // pulse whose duration is the time (in microseconds) from the sending
+  // of the ping to the reception of its echo off of an object.
+  pinMode(inPinFancy, INPUT);
+  duration = pulseIn(inPinFancy, HIGH);
+ 
+  // convert the time into a distance
+  cm = microsecondsToCentimeters(duration);
+  return cm;
+}
+
 int getD(int sonarPin) {
   
         long duration,cm;
         pinMode(sonarPin, OUTPUT);
-        digitalWrite(ledPin,LOW);
         digitalWrite(sonarPin, LOW);
         delayMicroseconds(2);
         digitalWrite(sonarPin, HIGH);
@@ -75,21 +101,32 @@ void addToBuffer() {
   }
 }
 
-void ledOff () {
-    if (millis() - timerStart > 300) {
+boolean green = false;
+
+void led () {
+    if (millis() - timerStart > 150) {
+      //timerStart = millis();
       digitalWrite(ledPin,LOW);
+      green = false;
+    } else {
+      digitalWrite(ledPin,HIGH);
     }
 }
 
+
+
+
 void letThereBeLight () {
-//    letThereBeLight = true;
+    green = true;
     timerStart = millis();
     digitalWrite(ledPin, HIGH);
 }
     
     
 void loop() {
-  ledOff();
+  led();
+  //digitalWrite(ledPin,HIGH);
+ // delay(500);
   int i;
   for ( i = 0; i < 6; i++ ) {
       if (buffer[i] != 0) {
@@ -102,10 +139,12 @@ void loop() {
   }
   
   
-  long cm = getD(sonarPin);
+  //long cm = getD(sonarPin);
+  long cm = getDistanceFancy();
+  delay(5);
   long cm2 = getD(sonarPin2);
   
-  /* SPAM BLOCK
+  //SPAM BLOCK
   
   Serial.print("A: ");
   Serial.println(cm);
@@ -113,7 +152,9 @@ void loop() {
   Serial.print("B: ");
   Serial.println(cm2);
   
-  */ // SPAM BLOCK 
+  delay(250);
+  
+   // SPAM BLOCK
   
     if (lastValue < threshold && cm >= threshold) {
       //passedFirst++;
@@ -156,7 +197,7 @@ void isort(long *a, int n){
     int k;
     for (k = i - 1; (k >= 0) && (j < a[k]); k--)
     {
-      a[k + 1] = a[k];|
+      a[k + 1] = a[k];
     }
     a[k + 1] = j;
   }
