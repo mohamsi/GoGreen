@@ -13,6 +13,31 @@
     <script type="text/javascript">
     
     	// Draws the column chart
+
+      function drawKalorierPersoner() {
+        var wrapper = new google.visualization.ChartWrapper({
+			//dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
+			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A27%3AC29&headers=-1',
+          chartType: 'ColumnChart',
+          options:{
+          	title : 'Personer & kalorier',
+			backgroundColor: { fill:'transparent' },
+          	animation:{
+          		duration: 300,
+          		easing: 'in'
+          	},
+		legend:{
+			position: 'bottom'
+		},
+		width: 1200,
+		height: 750
+          },
+          containerId: 'visualization_kalorier_personer'
+        });
+        wrapper.setRefreshInterval(1);
+        wrapper.draw();
+      }
+  	  google.setOnLoadCallback(drawKalorierPersoner);
     
       function drawAntallKalorier() {
         var wrapper = new google.visualization.ChartWrapper({
@@ -29,8 +54,8 @@
 		legend:{
 			position: 'bottom'
 		},
-		width: 1080,
-		height: 675
+		width: 1200,
+		height: 750
           },
           containerId: 'visualization_kalorier'
         });
@@ -52,11 +77,12 @@
           		easing: 'in'
           	},
 		legend:{
-			position: 'bottom'
+			position: 'right'
 		},
-		width: 1080,
-		height: 675
+		width: 1200,
+		height: 750
           },
+		chartArea:{left:0,top:0,width:"100%",height:"100%"},
           containerId: 'visualization_personer'
         });
         wrapper.setRefreshInterval(1);
@@ -92,10 +118,14 @@
 
     </script>
     <script>
-   $(function(){
+ 
+  $(function(){
                 $("#slideshow").slides(
 					{
-						play:5000
+						play:10000,
+						pagination : false,
+						generatePagination: false,
+						hoverPause: true
 					}
 				);
             });
@@ -107,29 +137,28 @@
 <div id="left">
 	<div id="top">
 		<div id="slideshow">
+			<h1>Takk for at du tok trappa opp!</h1>
 			<div class="slides_container">
-				<div id="slide1" class="slide">
-					<h1>Takk for at du tok trappa opp!</h1>
+				<div id="slide1" class="slide">			
 					<div id="visualization_personer" class="visualization"></div>
 				</div>
 				<div id="slide2" class="slide">
-					<h1>Takk for at du tok trappa opp!</h1>
 					<div id="visualization_kalorier" class="visualization"></div>
 				</div>
 				<div id="slide3" class="slide">
-					<h1>slide 3 </h1>
-					<div class="visualization"></div>
+					<div id="visualization_kalorier_personer" class="visualization"></div>
 				</div>
 			</div>
 
 		</div>
 		<div id="bottom">
 			<div id="b_left">
-				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fwww.uio.no" alt="qrcode"  /> <!-- We could probably edit this URL in JS ;) -->
-				<p>http://www.uio.no/</p>
+				<img src="img/logo.png" alt="GoGreen logo"  /> <!-- We could probably edit this URL in JS ;) -->
+				
 			</div>
 			<div id="b_right">
-				<img src="img/logo.png" alt="GoGreen logo" />
+				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fwww.uio.no" alt="qrcode"  />
+				<p>http://www.uio.no/</p>
 			</div>
 		</div>
 	</div>

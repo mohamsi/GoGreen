@@ -73,7 +73,7 @@ table {
 	float: left;
 }
 
-#b_left p{
+#b_right p{
 	color: #343434;
 	padding: 10px 0px 0px 5px;
 }
@@ -84,7 +84,7 @@ table {
 	text-align: right;
 }
 
-#b_right img{
+#b_left img{
 	margin-top: 100px;
 }
 
@@ -96,8 +96,8 @@ table {
 }
 
 .visualization{
-	width: 1080px;
-	height: 675px;
+	width: 1200px;
+	height: 750px;
 	margin: 0px auto;
 }
 
@@ -107,9 +107,9 @@ table {
 	background: repeat-x url('img/clouds.png');
 }
 
-#slideshow h1{
+#top h1, #slideshow h1{
 	padding-top: 70px;
-	font: bold 380% "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: bold 480% "Helvetica Neue", Helvetica, Arial, sans-serif;
 	letter-spacing: -1pt;
 	position: relative;
 	/*background: -webkit-gradient(linear, left top, left bottom, from(#3c85b7), to(#10324a));
@@ -120,8 +120,17 @@ table {
 }
 
 .slides_container {
-	width: 1080px;
+	text-align:center;	
 	margin: 0 auto;
+}
+
+.slides {
+	margin : 0 auto;
+	width: 1200px;
+}
+
+.slides_control {
+	margin-left: 40px;
 }
 
 .counter{
