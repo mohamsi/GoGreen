@@ -1,23 +1,23 @@
-int fancyPingA = 2; //trigger
-int fancyPongA = 5; //echo
-int fancyPingB = 0; //trigger
-int fancyPongB = 0; //echo
+const int fancyPingA = 2; //trigger
+const int fancyPongA = 5; //echo
+const int fancyPingB = 12; //trigger
+const int fancyPongB = 8; //echo
 
 const int ledPin = 10;
   
 int total = 0;
-int emptyStair;
-int emptyStair2;
-int threshold;
-int threshold2;
-int lastValue; 
-int lastValue2;
-int deadSpace = 20;
+long emptyStair;
+long emptyStair2;
+long threshold;
+long threshold2;
+long lastValue; 
+long lastValue2;
+long deadSpace = 0;
 int passedFirst = 0;
 long previousMillis = 0;
 long interval = 1000;
 
-long buffer[10] = {0,0,0,0,0,0,0,0,0,0};
+long buffer[6] = {0,0,0,0,0,0};
 int bufferCounter = 0;
 
 
@@ -31,9 +31,10 @@ void setup() {
   Serial.begin(9600); 
   Serial.print("Calibrating.\n");
   
-  while (millis () < 4000){
-    long d = getDistanceFancy(fancyPingA, fancyPongA);
-    long d2 = getDistanceFancy(fancyPingB, fancyPongB);
+  while (millis () < 10000){
+    long d = getDistanceCalibration(fancyPingA, fancyPongA);
+    delay(50);
+    long d2 = getDistanceCalibration(fancyPingB, fancyPongB);
     emptyStair = d;
     emptyStair2 = d2;
     lastValue = d;
@@ -67,16 +68,41 @@ long getDistanceFancy(int ping, int pong) {
   // pulse whose duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
   pinMode(pong, INPUT);
+  //duration = constrain(pulseIn(pong, HIGH), deadSpace, threshold * 29 * 2);
   duration = pulseIn(pong, HIGH);
  
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
-  return cm;
+  return constrain(cm, 5, threshold);
+}
+
+long getDistanceCalibration (int ping, int pong) {
+  long duration, inches, cm;
+ //Serial.
+  //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
+  // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+  pinMode(ping, OUTPUT);
+  digitalWrite(ping, LOW);
+  delayMicroseconds(2);
+  digitalWrite(ping, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(ping, LOW);
+ 
+  // The same pin is used to read the signal from the PING))): a HIGH
+  // pulse whose duration is the time (in microseconds) from the sending
+  // of the ping to the reception of its echo off of an object.
+  pinMode(pong, INPUT);
+  //duration = constrain(pulseIn(pong, HIGH), deadSpace, threshold * 29 * 2);
+  duration = pulseIn(pong, HIGH);
+ 
+  // convert the time into a distance
+  cm = microsecondsToCentimeters(duration);
+  return constrain(cm, 5, 200);
 }
 
 void addToBuffer() {
   int i;
-  for ( i = 0; i < 10; i++ ) {
+  for ( i = 0; i < 6; i++ ) {
       if (buffer[i] == 0) {
               buffer[i] = millis();
               bufferCounter++;
@@ -127,7 +153,7 @@ void loop() {
   long cm = getDistanceFancy(fancyPingA, fancyPongA);
   delay(5);
   long cm2 = getDistanceFancy(fancyPingB, fancyPongB);
-  
+  /*
   // SPAM BLOCK
   
   Serial.print("A: ");
@@ -136,12 +162,13 @@ void loop() {
   Serial.print("B: ");
   Serial.println(cm2);
   
-  delay(250);
+  //delay(250);
   
-  
+  */
     if (lastValue < threshold && cm >= threshold) {
       //passedFirst++;
       addToBuffer();
+      Serial.println("buffer plus 1");
       //Serial.print("Passed first. \n");
       //Serial.println(bufferCounter);
       //Serial.println(passedFirst);
@@ -149,7 +176,7 @@ void loop() {
       
     } 
     
-    if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0)) {
+   if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0)) {
       total = total++;
       //Serial.print("Passed second. \nTotal: ");
       //Serial.println(total);
