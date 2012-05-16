@@ -14,10 +14,35 @@
     
     	// Draws the column chart
     
-      function drawVisualization() {
+      function drawAntallKalorier() {
         var wrapper = new google.visualization.ChartWrapper({
-          //dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=summary!A1%3AA2%2Csummary!C1%3AD2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1', //antall personer
-			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
+			//dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
+			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A22%3AB24&headers=-1',
+          chartType: 'ColumnChart',
+          options:{
+          	title : 'Kalorier brent',
+			backgroundColor: { fill:'transparent' },
+          	animation:{
+          		duration: 300,
+          		easing: 'in'
+          	},
+		legend:{
+			position: 'bottom'
+		},
+		width: 1080,
+		height: 675
+          },
+          containerId: 'visualization_kalorier'
+        });
+        wrapper.setRefreshInterval(1);
+        wrapper.draw();
+      }
+  	  google.setOnLoadCallback(drawAntallKalorier);
+
+
+      function drawAntallPersoner() {
+        var wrapper = new google.visualization.ChartWrapper({
+          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=summary!A1%3AA2%2Csummary!C1%3AD2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1', //antall personer
           chartType: 'ColumnChart',
           options:{
           	title : 'Antall personer',
@@ -32,12 +57,12 @@
 		width: 1080,
 		height: 675
           },
-          containerId: 'visualization'
+          containerId: 'visualization_personer'
         });
         wrapper.setRefreshInterval(1);
         wrapper.draw();
       }
-  	  google.setOnLoadCallback(drawVisualization);
+  	  google.setOnLoadCallback(drawAntallPersoner);
  
       
       function realtimeNumber() {
@@ -85,10 +110,14 @@
 			<div class="slides_container">
 				<div id="slide1" class="slide">
 					<h1>Takk for at du tok trappa opp!</h1>
-					<div id="visualization"></div>
+					<div id="visualization_personer" class="visualization"></div>
 				</div>
 				<div id="slide2" class="slide">
-					<h1>slide 2 </h2>
+					<h1>Takk for at du tok trappa opp!</h1>
+					<div id="visualization_kalorier" class="visualization"></div>
+				</div>
+				<div id="slide3" class="slide">
+					<h1>slide 3 </h2>
 				</div>
 			</div>
 

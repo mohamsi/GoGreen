@@ -95,7 +95,7 @@ table {
 	background: #ffcf4d;
 }
 
-#visualization{
+.visualization{
 	width: 1080px;
 	height: 675px;
 	margin: 0px auto;
@@ -117,6 +117,11 @@ table {
 	-webkit-text-fill-color: transparent;*/
 	color: #0a293e;
 	text-shadow: 0px 1px 1px #333333;
+}
+
+.slides_container {
+	width: 1080px;
+	margin: 0 auto;
 }
 
 .counter{
