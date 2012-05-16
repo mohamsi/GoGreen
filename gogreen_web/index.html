@@ -4,6 +4,8 @@
 <title>GoGreen</title>
 <link rel="stylesheet" type="text/css" media="all" href="style.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/slides.jquery.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load('visualization', '1', {packages: ["corechart"]});
@@ -12,26 +14,57 @@
     
     	// Draws the column chart
     
-      function drawVisualization() {
+      function drawAntallKalorier() {
         var wrapper = new google.visualization.ChartWrapper({
-          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=A1%3AE2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1',
+			//dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
+			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A22%3AB24&headers=-1',
           chartType: 'ColumnChart',
           options:{
-          	title : 'Kalorier forbrent',
+          	title : 'Kalorier brent',
 			backgroundColor: { fill:'transparent' },
           	animation:{
           		duration: 300,
           		easing: 'in'
-          	}
+          	},
+		legend:{
+			position: 'bottom'
+		},
+		width: 1080,
+		height: 675
           },
-          containerId: 'visualization'
+          containerId: 'visualization_kalorier'
         });
         wrapper.setRefreshInterval(1);
         wrapper.draw();
       }
-   
-      	// Queries a single cell, sends to handleQueryResponse()
- /*     
+  	  google.setOnLoadCallback(drawAntallKalorier);
+
+
+      function drawAntallPersoner() {
+        var wrapper = new google.visualization.ChartWrapper({
+          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=summary!A1%3AA2%2Csummary!C1%3AD2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1', //antall personer
+          chartType: 'ColumnChart',
+          options:{
+          	title : 'Antall personer',
+			backgroundColor: { fill:'transparent' },
+          	animation:{
+          		duration: 300,
+          		easing: 'in'
+          	},
+		legend:{
+			position: 'bottom'
+		},
+		width: 1080,
+		height: 675
+          },
+          containerId: 'visualization_personer'
+        });
+        wrapper.setRefreshInterval(1);
+        wrapper.draw();
+      }
+  	  google.setOnLoadCallback(drawAntallPersoner);
+ 
+      
       function realtimeNumber() {
         var query = new google.visualization.Query(
             'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A1%3AG9&headers=1');
@@ -51,30 +84,44 @@
 		$("#counter_day").html(data.getValue(0,1));
 		$("#counter_month").html(data.getValue(0,3));
 		$("#counter_total").html(data.getValue(0,6));
-		
-		visualization = new google.visualization.ColumnChart(document.getElementById('visualization'));
-		var chardata = [
-			["tid","kalorier"],
-			["i dag", data.getValue(1,2)],
-			["i denne uken", data.getValue(1,3)]
-		];
-		visualization.draw(google.visualization.arrayToDataTable(chardata), {animation:{duration:300, easing: 'in'}});
       }
       
       
-      //realtimeNumber();
-	  */
-	  google.setOnLoadCallback(drawVisualization);
+      realtimeNumber();
+	  
+
     </script>
+    <script>
+   $(function(){
+                $("#slideshow").slides(
+					{
+						play:5000
+					}
+				);
+            });
+	</script>
 </head>
 <body>
-<script src="js/jquery.js"></script>
+
 
 <div id="left">
 	<div id="top">
-		<div id="slideshow"> <!-- We need a way to trigger to change in the dataSourceUrl variable, call draw() with this new data, and present this with a smooth transition. -->
-			<h1>Takk for at du tok trappa!</h1>
-			<div id="visualization"></div>
+		<div id="slideshow">
+			<div class="slides_container">
+				<div id="slide1" class="slide">
+					<h1>Takk for at du tok trappa opp!</h1>
+					<div id="visualization_personer" class="visualization"></div>
+				</div>
+				<div id="slide2" class="slide">
+					<h1>Takk for at du tok trappa opp!</h1>
+					<div id="visualization_kalorier" class="visualization"></div>
+				</div>
+				<div id="slide3" class="slide">
+					<h1>slide 3 </h1>
+					<div class="visualization"></div>
+				</div>
+			</div>
+
 		</div>
 		<div id="bottom">
 			<div id="b_left">
@@ -91,7 +138,7 @@
 <div id="right">
 
 	<div id="ct_title">
-		<p>Tatt trappen:</p>
+		<p>Tatt trappen opp:</p>
 	</div>
 
 	<div id="ct_dag" class="counter">
