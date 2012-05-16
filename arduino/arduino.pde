@@ -31,7 +31,7 @@ void setup() {
   Serial.begin(9600); 
   Serial.print("Calibrating.\n");
   
-  while (millis () < 10000){
+  while (millis () < 5000){
     long d = getDistanceCalibration(fancyPingA, fancyPongA);
     delay(50);
     long d2 = getDistanceCalibration(fancyPingB, fancyPongB);
@@ -73,7 +73,8 @@ long getDistanceFancy(int ping, int pong) {
  
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
-  return constrain(cm, 5, threshold);
+  //return constrain(cm, 5, threshold);
+  return cm;
 }
 
 long getDistanceCalibration (int ping, int pong) {
@@ -98,6 +99,7 @@ long getDistanceCalibration (int ping, int pong) {
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
   return constrain(cm, 5, 200);
+  
 }
 
 void addToBuffer() {
@@ -151,21 +153,24 @@ void loop() {
   
   //long cm = getD(sonarPin);
   long cm = getDistanceFancy(fancyPingA, fancyPongA);
+  if (cm > threshold)
+    cm = threshold;
   delay(5);
   long cm2 = getDistanceFancy(fancyPingB, fancyPongB);
-  /*
+  if (cm2 > threshold2)
+    cm2 = threshold2;
   // SPAM BLOCK
   
   Serial.print("A: ");
   Serial.println(cm);
-  
+    
   Serial.print("B: ");
   Serial.println(cm2);
+ 
+  delay(250);
   
-  //delay(250);
-  
-  */
-    if (lastValue < threshold && cm >= threshold) {
+ 
+    if (lastValue < threshold && cm >= threshold && cm < 300) {
       //passedFirst++;
       addToBuffer();
       Serial.println("buffer plus 1");
@@ -176,7 +181,7 @@ void loop() {
       
     } 
     
-   if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0)) {
+   if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0) && cm < 300) {
       total = total++;
       //Serial.print("Passed second. \nTotal: ");
       //Serial.println(total);
