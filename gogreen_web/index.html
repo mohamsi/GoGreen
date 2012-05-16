@@ -16,7 +16,8 @@
     
       function drawVisualization() {
         var wrapper = new google.visualization.ChartWrapper({
-          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=A1%3AE2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1',
+          //dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=summary!A1%3AA2%2Csummary!C1%3AD2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1', //antall personer
+			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
           chartType: 'ColumnChart',
           options:{
           	title : 'Antall personer',
@@ -36,8 +37,8 @@
         wrapper.setRefreshInterval(1);
         wrapper.draw();
       }
-   
-      	// Queries a single cell, sends to handleQueryResponse()
+  	  google.setOnLoadCallback(drawVisualization);
+ 
       
       function realtimeNumber() {
         var query = new google.visualization.Query(
@@ -63,7 +64,7 @@
       
       realtimeNumber();
 	  
-	  google.setOnLoadCallback(drawVisualization);
+
     </script>
     <script>
    $(function(){
