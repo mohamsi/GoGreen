@@ -1,5 +1,7 @@
-const int sonarPin = 5;
-const int sonarPin2 = 12;
+int fancyPingA = 2; //trigger
+int fancyPongA = 5; //echo
+int fancyPingB = 0; //trigger
+int fancyPongB = 0; //echo
 
 const int ledPin = 10;
   
@@ -15,7 +17,7 @@ int passedFirst = 0;
 long previousMillis = 0;
 long interval = 1000;
 
-long buffer[6] = {0,0,0,0,0,0};
+long buffer[10] = {0,0,0,0,0,0,0,0,0,0};
 int bufferCounter = 0;
 
 
@@ -30,8 +32,8 @@ void setup() {
   Serial.print("Calibrating.\n");
   
   while (millis () < 4000){
-    long d=getD(sonarPin);
-    long d2 = getD(sonarPin2);
+    long d = getDistanceFancy(fancyPingA, fancyPongA);
+    long d2 = getDistanceFancy(fancyPingB, fancyPongB);
     emptyStair = d;
     emptyStair2 = d2;
     lastValue = d;
@@ -49,50 +51,32 @@ void setup() {
   
 }
 
-int pingPinFancy = 3; //trigger
-int inPinFancy = 2; //echo
-long getDistanceFancy() {
+long getDistanceFancy(int ping, int pong) {
   long duration, inches, cm;
  //Serial.
   //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
-  pinMode(pingPinFancy, OUTPUT);
-  digitalWrite(pingPinFancy, LOW);
+  pinMode(ping, OUTPUT);
+  digitalWrite(ping, LOW);
   delayMicroseconds(2);
-  digitalWrite(pingPinFancy, HIGH);
+  digitalWrite(ping, HIGH);
   delayMicroseconds(10);
-  digitalWrite(pingPinFancy, LOW);
+  digitalWrite(ping, LOW);
  
   // The same pin is used to read the signal from the PING))): a HIGH
   // pulse whose duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
-  pinMode(inPinFancy, INPUT);
-  duration = pulseIn(inPinFancy, HIGH);
+  pinMode(pong, INPUT);
+  duration = pulseIn(pong, HIGH);
  
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
   return cm;
 }
 
-int getD(int sonarPin) {
-  
-        long duration,cm;
-        pinMode(sonarPin, OUTPUT);
-        digitalWrite(sonarPin, LOW);
-        delayMicroseconds(2);
-        digitalWrite(sonarPin, HIGH);
-        delayMicroseconds(5);
-        digitalWrite(sonarPin, LOW);
-        pinMode(sonarPin, INPUT);
-        duration = pulseIn(sonarPin, HIGH);
-        cm = microsecondsToCentimeters(duration);
-        return cm;
-        
-}
-
 void addToBuffer() {
   int i;
-  for ( i = 0; i < 6; i++ ) {
+  for ( i = 0; i < 10; i++ ) {
       if (buffer[i] == 0) {
               buffer[i] = millis();
               bufferCounter++;
@@ -140,11 +124,11 @@ void loop() {
   
   
   //long cm = getD(sonarPin);
-  long cm = getDistanceFancy();
+  long cm = getDistanceFancy(fancyPingA, fancyPongA);
   delay(5);
-  long cm2 = getD(sonarPin2);
+  long cm2 = getDistanceFancy(fancyPingB, fancyPongB);
   
-  //SPAM BLOCK
+  // SPAM BLOCK
   
   Serial.print("A: ");
   Serial.println(cm);
@@ -154,7 +138,6 @@ void loop() {
   
   delay(250);
   
-   // SPAM BLOCK
   
     if (lastValue < threshold && cm >= threshold) {
       //passedFirst++;
