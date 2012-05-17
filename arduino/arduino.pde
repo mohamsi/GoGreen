@@ -13,8 +13,6 @@ long threshold2;
 long lastValue; 
 long lastValue2;
 long deadSpace = 0;
-int passedFirst = 0;
-long previousMillis = 0;
 long interval = 1000;
 
 long buffer[6] = {0,0,0,0,0,0};
@@ -22,7 +20,6 @@ int bufferCounter = 0;
 
 
 long timerStart = millis();
-//boolean letThereBeLight;
 
 void setup() {
   pinMode(ledPin,OUTPUT);
@@ -68,12 +65,10 @@ long getDistanceFancy(int ping, int pong) {
   // pulse whose duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
   pinMode(pong, INPUT);
-  //duration = constrain(pulseIn(pong, HIGH), deadSpace, threshold * 29 * 2);
   duration = pulseIn(pong, HIGH);
  
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
-  //return constrain(cm, 5, threshold);
   return cm;
 }
 
@@ -117,7 +112,6 @@ boolean green = false;
 
 void led () {
     if (millis() - timerStart > 150) {
-      //timerStart = millis();
       digitalWrite(ledPin,LOW);
       green = false;
     } else {
@@ -137,8 +131,6 @@ void letThereBeLight () {
     
 void loop() {
   led();
-  //digitalWrite(ledPin,HIGH);
- // delay(500);
   int i;
   for ( i = 0; i < 6; i++ ) {
       if (buffer[i] != 0) {
@@ -151,7 +143,6 @@ void loop() {
   }
   
   
-  //long cm = getD(sonarPin);
   long cm = getDistanceFancy(fancyPingA, fancyPongA);
   if (cm > threshold)
     cm = threshold;
@@ -171,26 +162,16 @@ void loop() {
   
  
     if (lastValue < threshold && cm >= threshold && cm < 300) {
-      //passedFirst++;
       addToBuffer();
-      Serial.println("buffer plus 1");
-      //Serial.print("Passed first. \n");
-      //Serial.println(bufferCounter);
-      //Serial.println(passedFirst);
-      
-      
+      Serial.println("buffer plus 1");      
     } 
     
    if ( ((lastValue2 < threshold2 - 10) && (cm2 >= threshold)) && (bufferCounter > 0) && cm < 300) {
-      total = total++;
-      //Serial.print("Passed second. \nTotal: ");
-      //Serial.println(total);
-	Serial.println("1");
+      	total = total++;
+		Serial.println("1");
         letThereBeLight();
-      //passedFirst = passedFirst--;
-      //hasPassed = false;
-      bufferCounter--;
-      buffer[0] = 0;
+      	bufferCounter--;
+      	buffer[0] = 0;
     }
     
     lastValue2 = cm2;
@@ -221,6 +202,6 @@ void isort(long *a, int n){
 
 
 long microsecondsToCentimeters(long microseconds) {
-  return microseconds / 29 / 2;
+	return microseconds / 29 / 2;
 }
 
