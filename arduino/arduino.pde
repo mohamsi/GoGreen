@@ -11,7 +11,7 @@ long emptyStair;
 long emptyStair2;
 long threshold;
 long threshold2;
-long deadSpace = 0;
+long deadSpace = 10;
 
 long lastValue; 
 long lastValue2;
@@ -174,7 +174,7 @@ void loop() {
     
 	//check if someone passed sensor B after passing sensor A
 	//		we ignore values higher than 300
-   if ( ((lastValue2 < threshold2 - 10) && (cm2 >= threshold)) && (bufferCounter > 0) && cm < 300) {
+   if ( ((lastValue2 < threshold2) && (cm2 >= threshold2)) && (bufferCounter > 0) && cm < 300) {
       	total = total++;
 		Serial.println("1");
         letThereBeLight();
