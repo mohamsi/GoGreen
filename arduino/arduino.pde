@@ -16,7 +16,7 @@ long deadSpace = 10;
 long lastValue; 
 long lastValue2;
 
-const int bufferLength = 6;
+const int bufferLength = 12;
 long buffer[bufferLength];
 int bufferCounter = 0;
 
