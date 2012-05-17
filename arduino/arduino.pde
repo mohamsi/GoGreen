@@ -16,7 +16,7 @@ long deadSpace = 0;
 long lastValue; 
 long lastValue2;
 
-int bufferLength = 6;
+const int bufferLength = 6;
 long buffer[bufferLength];
 int bufferCounter = 0;
 
@@ -90,6 +90,34 @@ void addToBuffer() {
   }
 }
 
+//make sure we always remove the newest non-zero value (sort the buffer first)
+void removeFromBuffer() {
+  isort(buffer,bufferLength);
+  for (int i = 0; i < bufferLength; i++) {
+    if(buffer[i] == 0) {
+      continue;
+    } else {
+      buffer[i] = 0;
+      bufferCounter--;
+      break;
+    }
+  }
+}
+
+void cleanBuffer() {
+  //remove from the buffer any values that are older than 2000ms
+  int i;
+  for ( i = 0; i < bufferLength; i++ ) {
+      if (buffer[i] != 0) {
+          if ( millis() - buffer[i] > 2000 ) {
+             // Serial.println("removing from buffer");
+              buffer[i] = 0;
+              bufferCounter--;
+          }
+      }
+  }
+}
+
 boolean green = false;
 
 //check if we need to turn off the LED
@@ -115,16 +143,7 @@ void loop() {
   led();
 
   //remove from the buffer any values that are older than 2000ms
-  int i;
-  for ( i = 0; i < bufferLength; i++ ) {
-      if (buffer[i] != 0) {
-          if ( millis() - buffer[i] > 2000 ) {
-             // Serial.println("removing from buffer");
-              buffer[i] = 0;
-              bufferCounter--;
-          }
-      }
-  }
+  cleanBuffer();
   
   //get the distance for each sensor
   //ignore values higher than threshold by setting them equal to threshold
@@ -159,8 +178,9 @@ void loop() {
       	total = total++;
 		Serial.println("1");
         letThereBeLight();
-      	bufferCounter--;
-      	buffer[0] = 0;
+        removeFromBuffer();
+      	//bufferCounter--;
+      	//buffer[0] = 0;
     }
     
     lastValue2 = cm2;
@@ -174,7 +194,6 @@ void loop() {
 // sort function (Author: Bill Gentles, Nov. 12, 2010)
 void isort(long *a, int n){
 // *a is an array pointer function
-
 
   for (int i = 1; i < n; ++i)
   {
