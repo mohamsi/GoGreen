@@ -104,6 +104,14 @@ void removeFromBuffer() {
   }
 }
 
+void printBuffer() {
+	Serial.print("Buffer: ");	
+	for (int i = 0; i<bufferLength; i++) {
+		Serial.print(buffer[i]);
+	}
+	Serial.println();
+}
+
 void cleanBuffer() {
   //remove from the buffer any values that are older than 2000ms
   int i;
