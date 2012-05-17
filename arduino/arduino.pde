@@ -90,10 +90,10 @@ void addToBuffer() {
   }
 }
 
-//make sure we always remove the newest non-zero value (sort the buffer first)
+//make sure we always remove the oldest non-zero value (sort the buffer first)
 void removeFromBuffer() {
   isort(buffer,bufferLength);
-  for (int i = 0; i < bufferLength; i++) {
+  for (int i = bufferLength-1; i <= 0; i--) {
     if(buffer[i] == 0) {
       continue;
     } else {
