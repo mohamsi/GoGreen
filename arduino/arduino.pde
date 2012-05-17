@@ -15,7 +15,8 @@ long lastValue2;
 long deadSpace = 0;
 long interval = 1000;
 
-long buffer[6] = {0,0,0,0,0,0};
+int bufferLength = 6;
+long buffer[bufferLength];
 int bufferCounter = 0;
 boolean calibration = true;
 
@@ -77,7 +78,7 @@ long getDistance(int ping, int pong) {
 
 void addToBuffer() {
   int i;
-  for ( i = 0; i < 6; i++ ) {
+  for ( i = 0; i < bufferLength; i++ ) {
       if (buffer[i] == 0) {
               buffer[i] = millis();
               bufferCounter++;
@@ -110,7 +111,7 @@ void letThereBeLight () {
 void loop() {
   led();
   int i;
-  for ( i = 0; i < 6; i++ ) {
+  for ( i = 0; i < bufferLength; i++ ) {
       if (buffer[i] != 0) {
           if ( millis() - buffer[i] > 2000 ) {
              // Serial.println("removing from buffer");
