@@ -14,6 +14,38 @@
     
     	// Draws the column chart
 
+      function makePizzaForHilde() {
+        var wrapper = new google.visualization.ChartWrapper({
+			//dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=C38&headers=-1', //kalorier
+							  
+			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A10%3AB11&headers=-1',
+          chartType: 'PieChart',
+          options:{
+			backgroundColor: { fill:'transparent' },
+			tooltip : {trigger: 'none'},
+			pieSliceText: 'none',
+			chartArea:{left:0,top:0,width:"100%",height:"100%"},
+			colors:['transparent','#fafafa'],
+          	animation:{
+          		duration: 300,
+          		easing: 'in'
+          	},
+		legend:{
+			position: 'none'
+		},
+		width: 650,
+		height: 650
+          },
+          containerId: 'pizza_container'
+        });
+        wrapper.setRefreshInterval(1);
+        wrapper.draw();
+      }
+  	  google.setOnLoadCallback(makePizzaForHilde);
+
+
+
+
       function drawKalorierPersoner() {
         var wrapper = new google.visualization.ChartWrapper({
 			//dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
@@ -93,8 +125,9 @@
       
       function realtimeNumber() {
         var query = new google.visualization.Query(
-            'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A1%3AG9&headers=1');
-        query.setRefreshInterval(1);
+           // 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A1%3AG11&headers=1');
+			'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A1%3AG12&headers=-1');        
+		query.setRefreshInterval(1);
         query.send(handleQueryResponse);
       }
       
@@ -110,6 +143,10 @@
 		$("#counter_day").html(data.getValue(0,1));
 		$("#counter_month").html(data.getValue(0,3));
 		$("#counter_total").html(data.getValue(0,6));
+		$("#pizza_percent").html(data.getValue(10,1));
+		$("#day_calories").html(data.getValue(1,1));
+		$("#cheeseburger_count").html(data.getValue(3,1));
+
       }
       
       
@@ -123,9 +160,23 @@
                 $("#slideshow").slides(
 					{
 						play:10000,
+						bigTarget:true,
 						pagination : false,
 						generatePagination: false,
-						hoverPause: true
+						hoverPause: true,
+						animationComplete: function(current) {
+            				// Get the "current" slide number
+            				console.log(current);
+							if(current == 5) {
+								$("#ct_uke").css({"background":"#ccc","color":"#eee"});
+								$("#ct_mnd").css({"background":"#ccc","color":"#eee"});
+								$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
+							} else {
+								$("#ct_uke").css({"background":"","color":""});
+								$("#ct_mnd").css({"background":"","color":""});
+								$("#ct_dag").css({"margin":"","padding":""});
+							}
+        				}
 					}
 				);
             });
@@ -143,10 +194,24 @@
 					<div id="visualization_personer" class="visualization"></div>
 				</div>
 				<div id="slide2" class="slide">
-					<div id="visualization_kalorier" class="visualization"></div>
+						<div id="visualization_cheeseburger" class="visualization">
+							<div class="vis_left">
+								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
+							</div>
+							<div class="vis_right"><img src="cheeseburger.png"/></div>
+						</div>
 				</div>
 				<div id="slide3" class="slide">
+					<div id="visualization_kalorier" class="visualization"></div>
+				</div>
+				<div id="slide4" class="slide">
 					<div id="visualization_kalorier_personer" class="visualization"></div>
+				</div>
+				<div id="slide5" class="slide">
+						<div id="visualization_pizza" class="visualization">
+							<div id="pizza_container"></div>
+							<h2>Total forbrente kalorier i dag<br> tilsvarer <span id="pizza_percent"></span>% av en grandiosa pizza!</h2>
+						</div>
 				</div>
 			</div>
 
@@ -171,17 +236,17 @@
 	</div>
 
 	<div id="ct_dag" class="counter">
-		<h3 id="counter_day">1000</h3>
+		<h3 id="counter_day">0</h3>
 		<p>I dag</p>
 	</div>
 	
 	<div id="ct_uke" class="counter">
-		<h3 id="counter_month">1000</h3>
+		<h3 id="counter_month">0</h3>
 		<p>Denne uken</p>
 	</div>
 	
 	<div id="ct_mnd" class="counter">
-		<h3 id="counter_total">1000</h3>
+		<h3 id="counter_total">0</h3>
 		<p>Totalt</p>
 	</div>
 	
