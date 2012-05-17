@@ -6,18 +6,20 @@ const int fancyPongB = 8; //echo
 const int ledPin = 10;
   
 int total = 0;
+
 long emptyStair;
 long emptyStair2;
 long threshold;
 long threshold2;
+long deadSpace = 0;
+
 long lastValue; 
 long lastValue2;
-long deadSpace = 0;
-long interval = 1000;
 
 int bufferLength = 6;
 long buffer[bufferLength];
 int bufferCounter = 0;
+
 boolean calibration = true;
 
 long timerStart = millis();
@@ -39,6 +41,7 @@ void setup() {
     lastValue2 = d2;
   }
   calibration = false;
+
   threshold = emptyStair - deadSpace;
   threshold2 = emptyStair2 - deadSpace;
   Serial.print("Range: ");
@@ -52,7 +55,6 @@ void setup() {
 
 long getDistance(int ping, int pong) {
   long duration, inches, cm;
- //Serial.
   //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
   pinMode(ping, OUTPUT);
@@ -76,6 +78,7 @@ long getDistance(int ping, int pong) {
   return cm;
 }
 
+//add to buffer the current time indicating when someone passed sensor A
 void addToBuffer() {
   int i;
   for ( i = 0; i < bufferLength; i++ ) {
@@ -89,6 +92,7 @@ void addToBuffer() {
 
 boolean green = false;
 
+//check if we need to turn off the LED
 void led () {
     if (millis() - timerStart > 150) {
       digitalWrite(ledPin,LOW);
@@ -98,9 +102,7 @@ void led () {
     }
 }
 
-
-
-
+//turn on the LED
 void letThereBeLight () {
     green = true;
     timerStart = millis();
@@ -109,7 +111,10 @@ void letThereBeLight () {
     
     
 void loop() {
+  //check if we need to turn off the led
   led();
+
+  //remove from the buffer any values that are older than 2000ms
   int i;
   for ( i = 0; i < bufferLength; i++ ) {
       if (buffer[i] != 0) {
@@ -121,7 +126,8 @@ void loop() {
       }
   }
   
-  
+  //get the distance for each sensor
+  //ignore values higher than threshold by setting them equal to threshold
   long cm = getDistance(fancyPingA, fancyPongA);
   if (cm > threshold)
     cm = threshold;
@@ -129,6 +135,7 @@ void loop() {
   long cm2 = getDistance(fancyPingB, fancyPongB);
   if (cm2 > threshold2)
     cm2 = threshold2;
+
   // SPAM BLOCK
   /*
   Serial.print("A: ");
@@ -139,12 +146,15 @@ void loop() {
  
   //delay(250);
   
- 
+    //check if someone passed sensor A
+	//		we ignore values higher than 300
     if (lastValue < threshold && cm >= threshold && cm < 300) {
       addToBuffer();
       Serial.println("buffer plus 1");      
     } 
     
+	//check if someone passed sensor B after passing sensor A
+	//		we ignore values higher than 300
    if ( ((lastValue2 < threshold2 - 10) && (cm2 >= threshold)) && (bufferCounter > 0) && cm < 300) {
       	total = total++;
 		Serial.println("1");
@@ -177,7 +187,6 @@ void isort(long *a, int n){
     a[k + 1] = j;
   }
 } 
-
 
 
 long microsecondsToCentimeters(long microseconds) {
