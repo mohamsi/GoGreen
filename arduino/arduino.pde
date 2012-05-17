@@ -17,7 +17,7 @@ long interval = 1000;
 
 long buffer[6] = {0,0,0,0,0,0};
 int bufferCounter = 0;
-
+boolean calibration = true;
 
 long timerStart = millis();
 
@@ -29,15 +29,15 @@ void setup() {
   Serial.print("Calibrating.\n");
   
   while (millis () < 5000){
-    long d = getDistanceCalibration(fancyPingA, fancyPongA);
+    long d = getDistance(fancyPingA, fancyPongA);
     delay(50);
-    long d2 = getDistanceCalibration(fancyPingB, fancyPongB);
+    long d2 = getDistance(fancyPingB, fancyPongB);
     emptyStair = d;
     emptyStair2 = d2;
     lastValue = d;
     lastValue2 = d2;
   }
-  
+  calibration = false;
   threshold = emptyStair - deadSpace;
   threshold2 = emptyStair2 - deadSpace;
   Serial.print("Range: ");
@@ -49,7 +49,7 @@ void setup() {
   
 }
 
-long getDistanceFancy(int ping, int pong) {
+long getDistance(int ping, int pong) {
   long duration, inches, cm;
  //Serial.
   //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
@@ -69,32 +69,10 @@ long getDistanceFancy(int ping, int pong) {
  
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
+  if (calibration) {
+	return constrain(cm, 5, 200);
+  }
   return cm;
-}
-
-long getDistanceCalibration (int ping, int pong) {
-  long duration, inches, cm;
- //Serial.
-  //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
-  // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
-  pinMode(ping, OUTPUT);
-  digitalWrite(ping, LOW);
-  delayMicroseconds(2);
-  digitalWrite(ping, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(ping, LOW);
- 
-  // The same pin is used to read the signal from the PING))): a HIGH
-  // pulse whose duration is the time (in microseconds) from the sending
-  // of the ping to the reception of its echo off of an object.
-  pinMode(pong, INPUT);
-  //duration = constrain(pulseIn(pong, HIGH), deadSpace, threshold * 29 * 2);
-  duration = pulseIn(pong, HIGH);
- 
-  // convert the time into a distance
-  cm = microsecondsToCentimeters(duration);
-  return constrain(cm, 5, 200);
-  
 }
 
 void addToBuffer() {
@@ -143,11 +121,11 @@ void loop() {
   }
   
   
-  long cm = getDistanceFancy(fancyPingA, fancyPongA);
+  long cm = getDistance(fancyPingA, fancyPongA);
   if (cm > threshold)
     cm = threshold;
   delay(5);
-  long cm2 = getDistanceFancy(fancyPingB, fancyPongB);
+  long cm2 = getDistance(fancyPingB, fancyPongB);
   if (cm2 > threshold2)
     cm2 = threshold2;
   // SPAM BLOCK
