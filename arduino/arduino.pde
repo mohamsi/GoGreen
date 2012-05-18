@@ -25,6 +25,7 @@ boolean calibration = true;
 long timerStart = millis();
 
 long lastBufferAddition = millis();
+long lastSensorB = millis();
 
 void setup() {
   pinMode(ledPin,OUTPUT);
@@ -204,9 +205,10 @@ void loop() {
     
 	//check if someone passed sensor B after passing sensor A
 	//		we ignore values higher than 300
-   if ( ((lastValue2 < threshold2) && (cm2 >= threshold2)) && (bufferCounter > 0) && cm2 < 300) {
+   if ( ((lastValue2 < threshold2) && (cm2 >= threshold2)) && (bufferCounter > 0) && cm2 < 300 && (millis() - lastSensorB > 1000)) {
       	total = total++;
 	Serial.println("1");
+        lastSensorB = millis();
         letThereBeLight();
         removeFromBuffer();
       	//bufferCounter--;
