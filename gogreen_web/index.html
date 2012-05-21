@@ -153,12 +153,12 @@
       realtimeNumber();
 	
 
-	showPremieScreen() {
+	showPremieScreen = function() {
 		//show the fullscreen div
 		$("#fullscreen").show();
 		//hide it 30 seconds later
 		window.setTimeout(function(){$("#fullscreen").hide();},30000);
-	}
+	};
 
     </script>
     <script>
@@ -177,11 +177,11 @@
 							if(current == 5) {
 								$("#ct_uke").css({"background":"#ccc","color":"#eee"});
 								$("#ct_mnd").css({"background":"#ccc","color":"#eee"});
-								$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
+								//$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
 							} else {
 								$("#ct_uke").css({"background":"","color":""});
 								$("#ct_mnd").css({"background":"","color":""});
-								$("#ct_dag").css({"margin":"","padding":""});
+								//$("#ct_dag").css({"margin":"","padding":""});
 							}
         				}
 					}
