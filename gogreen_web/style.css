@@ -85,7 +85,12 @@ table {
 }
 
 #b_left img{
-	margin-top: 100px;
+	margin-top: 60px;
+}
+
+#b_left p {
+	font-size: 250%;
+	margin-top:20px;
 }
 
 #right{
