@@ -63,7 +63,7 @@ table {
 
 #bottom {
 	width: 1080px;
-	margin: 0px auto 0px auto;
+	margin: 40px auto 0px auto;
 	
 	/* Needs some BIGASS EDITING for final release. AHHHHHH */
 }
@@ -134,7 +134,7 @@ div#visualization_cheeseburger {
 	margin-left:60px;
 }
 
-#day_calories, #cheeseburger_count {
+#day_calories, #cheeseburger_count , .red{
 	color: red;
 }
 
@@ -206,12 +206,12 @@ div#fullscreen {
 	font-size: 1050%;
 	font-weight: bold;
 	text-shadow: 0px 1px 1px #333333;
-	margin-top: 13%;
+	margin-top: 11%;
 }
 
 .counter p{
 	 color: rgba(0, 0, 0, 0.7);
-	 font-size: 150%;
+	 font-size: 250%;
 }
 
 #ct_dag{
