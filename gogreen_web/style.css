@@ -234,7 +234,7 @@ div#visualization_cheeseburger {
 }
 
 #ct_title{
-	height: 10%;
+	height: 8%;
 background: #eeeeee; /* Old browsers */
 background: -moz-linear-gradient(top, #eeeeee 0%, #d6d6d6 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
