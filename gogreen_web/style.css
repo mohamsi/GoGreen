@@ -178,6 +178,18 @@ div#visualization_cheeseburger {
 	margin-left: 40px;
 }
 
+div#fullscreen {
+	background-color: #000;
+	height: 100%;
+	width: 100%;
+	top:0;
+	position: absolute;
+	z-index: 999;
+	color: #fff;
+	display: none;
+}
+
+
 .counter{
 	height: 30%;
 	width: 100%;

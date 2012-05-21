@@ -151,7 +151,14 @@
       
       
       realtimeNumber();
-	  
+	
+
+	showPremieScreen() {
+		//show the fullscreen div
+		$("#fullscreen").show();
+		//hide it 30 seconds later
+		window.setTimeout(function(){$("#fullscreen").hide();},30000);
+	}
 
     </script>
     <script>
@@ -179,6 +186,7 @@
         				}
 					}
 				);
+		
             });
 	</script>
 </head>
@@ -216,6 +224,7 @@
 			</div>
 
 		</div>
+		<div id="fullscreen"><p>some placeholder text</p></div>
 		<div id="bottom">
 			<div id="b_left">
 				<img src="img/logo.png" alt="GoGreen logo"  /> <!-- We could probably edit this URL in JS ;) -->
