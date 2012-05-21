@@ -132,7 +132,7 @@ div#pizza_container {
 	margin: 0px auto;
 	height: 650px;
 	width: 650px;
-	background-image: url('images/pizza-whole.png');
+	background-image: url('img/pizza-whole.png');
 }
 
 div#visualization_cheeseburger, div#visualization_cheeseburger_total, div#visualization_map {
