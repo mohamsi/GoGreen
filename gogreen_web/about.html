@@ -1,0 +1,56 @@
+<!DOCTYPE html-->
+<html>
+<head>
+<title>GoGreen</title>
+<link rel="stylesheet" type="text/css" media="all" href="interactive.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<div id="global_wrapper">
+	<div id="wrapper">
+		<div id="top">
+			<img src="img/logo_alpha.png" alt="GoGreen" class="floatLeft"/>
+			<h2>Om oss</h2>
+		</div>
+		<div id="main">
+			<div id="left">
+				<h3>Introduksjon</h3>
+				<p>Vi en er gjeng studenter på Informatikk: design, bruk og interaksjon ved Universitet i Oslo.
+				Våren 2012 fikk vi en oppgave om å designe og utvikle en løsning ved bruk av
+				prototype-verktøyet <a href="http://www.arduino.cc/">Arduino</a>. GoGreen trappeteller er resultatet.</p>
+				<p>GoGreen består av Jeongyun Choi, Hilde Bakken Reistad, Lena Drevsjø, Saq Imtiaz og Morten Ryum. Alle har bidratt
+				med design, programmering, og evaluering.</p>
+				<img src="img/teller_logo.png" alt="Trappeteller Logo" class="floatLeft override icon"/><h3>GoGreen Trappeteller</h3>
+				<p>GoGreen Trappeteller motiverer deg til å ta trappen. Vi teller deg hver
+				gang du tar trappen, og presenterer dette på ulike måter når du når toppen av trappa.</p>
+				<p style="margin-top: 30px;"><a href="img/low-fi-stor.png" title="Zoom"><img src="img/low-fi.png" alt="Low-fidelty prototype" /><br />Zoom</a></p>
+				<p style="margin-top: 20px;">Trappetelleren har flere funksjoner. Det hele begynner når du kommer til et punkt hvor du har valget mellom å ta heisen eller trappen. En skjerm vil reagere på din tilstedeværelse, og komme med gode argumenter for å ta trappen. Når du begynner å gå opp trappen vil trappetelleren registrere at du er på vei. Når du når toppen, vil tavlen på toppen oppdateres automatisk med ditt bidrag. Er du heldig, kan du til og med vinne fete premier.</p>
+				<h3>Arkitektur</h3>
+				<p><a href="img/arkitektur_stor.png" alt="Klikk for å zoome"><img src="img/arkitektur_liten.png" alt="Arkitekturkart"/><br />Zoom</a></p>
+				<p>Systemet består av 2 avstandssensorer av typen xxx som er koblet til et <a href="http://arduino.cc/en/Main/arduinoBoardUno">Arduino Uno</a>-brett. Når første sensor passeres, blir dette registrert i en buffer i Ardunio-brettet. Når andre sensor blir passert innen en tidsramme på x sekunder, registeres dette som en passert person. Har flere personer lagt seg i bufferen vil disse også telle. Deretter blir bufferen tømt og sendt over til <a href="http://processing.org/">Processing</a> (Java) via seriellporten.</p>
+				<p>Processing sender så data over til <a href="https://docs.google.com/">Google Spreadsheets</a> som gjør ulike kalkulasjoner, som f.eks antall kalorier, høydemeter, osv. Skjermen på toppen av trappene er koblet til en PC med internett-forbindelse. Denne PCen har en webside som ved hjelp av <a href="https://developers.google.com/chart/">Google Charts</a> tegner grafer ved data fra Google Spreadsheets. Disse grafene oppdateres hvert sekund ved hjelp av AJAX. Data fra Google Spreadsheets blir også brukt til å vise antall passerte personer over tre ulike tidsrammer: I dag, denne uken og totalt.</p> 
+			</div>
+			<div id="right">
+				<h3>Nøkkeltall</h3>
+				<ul>
+					<li>6 måneder</li>
+					<li>55 intervjuer</li>
+					<li>200 observasjoner</li>
+					<li>5 prototyper</li>
+					<li>5 workshops</li>
+					<li>100 uventede problemer</li>
+				</ul>
+				<h3>Teknologier</h3>
+				<p><img src="img/webtechs.png" class="override" alt="HTML5 Tag" /></p>
+				<p><img src="img/arduino.png" class="override" alt="Arduino logo" /></p>
+				<p><img src="img/googledev.png" class="override" alt="Google Developers logo" /></p>
+				<h3>Kildekode</h3>
+				<p>Du finner siste versjon av kildekoden på <a href="https://github.com/mohamsi/GoGreen">GitHub</a>.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

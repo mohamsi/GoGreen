@@ -63,7 +63,7 @@ table {
 
 #bottom {
 	width: 1080px;
-	margin: 0px auto 0px auto;
+	margin: 40px auto 0px auto;
 	
 	/* Needs some BIGASS EDITING for final release. AHHHHHH */
 }
@@ -73,7 +73,7 @@ table {
 	float: left;
 }
 
-#b_left p{
+#b_right p{
 	color: #343434;
 	padding: 10px 0px 0px 5px;
 }
@@ -84,8 +84,13 @@ table {
 	text-align: right;
 }
 
-#b_right img{
-	margin-top: 100px;
+#b_left img{
+	margin-top: 60px;
+}
+
+#b_left p {
+	font-size: 250%;
+	margin-top:20px;
 }
 
 #right{
@@ -96,9 +101,41 @@ table {
 }
 
 .visualization{
-	width: 1080px;
-	height: 675px;
+	width: 1200px;
+	height: 800px; /*needs tweaking to fit the target screen size perfectly, might need a different size for #slide5*/
+	margin: 30px auto 0px;
+}
+
+.vis_left {
+	font: bold 350% "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #0a293e;
+	text-shadow: 0px 1px 1px #333333;
+	float : left;
+	width: 50%;
+	line-height : inherit;
+}
+
+.vis_right {
+	float : right;
+	width : 50%;
+}
+
+div#pizza_container {
+
 	margin: 0px auto;
+	height: 650px;
+	width: 650px;
+	background-image: url('pizza-whole.png');
+}
+
+div#visualization_cheeseburger {
+	margin-top:350px;
+	margin-right:30px;
+	margin-left:60px;
+}
+
+#day_calories, #cheeseburger_count , .red{
+	color: red;
 }
 
 #slideshow{
@@ -107,9 +144,9 @@ table {
 	background: repeat-x url('img/clouds.png');
 }
 
-#slideshow h1{
+#top h1, #slideshow h1{
 	padding-top: 70px;
-	font: bold 380% "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: bold 480% "Helvetica Neue", Helvetica, Arial, sans-serif;
 	letter-spacing: -1pt;
 	position: relative;
 	/*background: -webkit-gradient(linear, left top, left bottom, from(#3c85b7), to(#10324a));
@@ -119,10 +156,44 @@ table {
 	text-shadow: 0px 1px 1px #333333;
 }
 
+#slideshow h2 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font: bold 280% "Helvetica Neue", Helvetica, Arial, sans-serif;
+	position: relative;
+	/*background: -webkit-gradient(linear, left top, left bottom, from(#3c85b7), to(#10324a));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;*/
+	color: #0a293e;
+	text-shadow: 0px 1px 1px #333333;
+	line-height : inherit;
+}
+
 .slides_container {
-	width: 1080px;
+	text-align:center;	
 	margin: 0 auto;
 }
+
+.slides {
+	margin : 0 auto;
+	width: 1200px;
+}
+
+.slides_control {
+	margin-left: 40px;
+}
+
+div#fullscreen {
+	background-color: #000;
+	height: 100%;
+	width: 100%;
+	top:0;
+	position: absolute;
+	z-index: 999;
+	color: #fff;
+	display: none;
+}
+
 
 .counter{
 	height: 30%;
@@ -132,15 +203,15 @@ table {
 }
 
 .counter h3{
-	font-size: 750%;
+	font-size: 1050%;
 	font-weight: bold;
 	text-shadow: 0px 1px 1px #333333;
-	margin-top: 5%;
+	margin-top: 11%;
 }
 
 .counter p{
 	 color: rgba(0, 0, 0, 0.7);
-	 font-size: 150%;
+	 font-size: 250%;
 }
 
 #ct_dag{
@@ -180,7 +251,7 @@ table {
 }
 
 #ct_title{
-	height: 10%;
+	height: 8%;
 background: #eeeeee; /* Old browsers */
 background: -moz-linear-gradient(top, #eeeeee 0%, #d6d6d6 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
@@ -196,7 +267,7 @@ border-top: 1px solid #fff;
 	font-size: 250%;
 	font-weight: bold;
 	text-shadow: 0px 1px 0px #fff;
-	padding-top: 3%;
+	padding-top: 4%;
 	color: #434141;
 	text-align: center;
 }
