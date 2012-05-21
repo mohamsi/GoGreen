@@ -145,8 +145,11 @@
 		$("#counter_total").html(data.getValue(0,6));
 		$("#pizza_percent").html(data.getValue(10,1));
 		$("#day_calories").html(data.getValue(1,1));
+		$("#total_calories").html(data.getValue(1,6));
 		$("#pizza_calories").html(data.getValue(1,1));
 		$("#cheeseburger_count").html(data.getValue(3,1));
+		$("#total_cheeseburger_count").html(data.getValue(3,6));
+		
 
       }
       
@@ -205,7 +208,9 @@
 				<div id="slide2" class="slide">
 						<div id="visualization_cheeseburger" class="visualization">
 							<div class="vis_left">
-								<!--<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>-->
+								<!--
+								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
+								-->
 								<div>I dag er det forbrent <span id="day_calories"></span> kalorier, som tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
 							</div>
 							<div class="vis_right"><img src="cheeseburger.png"/></div>
@@ -224,6 +229,17 @@
 							<h2>I dag er det forbrent <span id="pizza_calories" class="red"></span> kalorier,<br> som tilsvarer <span id="pizza_percent" class="red"></span>% av en grandiosa pizza!</h2>
 						</div>
 				</div>
+				<div id="slide6" class="slide">
+						<div id="visualization_cheeseburger" class="visualization">
+							<div class="vis_left">
+								<!--
+								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
+								-->
+								<div>Total er det forbrent <span id="total_calories" class="red"></span> kalorier, som tilsvarer <span id="total_cheeseburger_count" class="red"></span> cheeseburgere!</div>
+							</div>
+							<div class="vis_right"><img src="cheeseburger.png"/></div>
+						</div>
+				</div>				
 			</div>
 
 		</div>
