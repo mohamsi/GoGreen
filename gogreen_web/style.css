@@ -63,7 +63,7 @@ table {
 
 #bottom {
 	width: 1080px;
-	margin: 0px auto 0px auto;
+	margin: 40px auto 0px auto;
 	
 	/* Needs some BIGASS EDITING for final release. AHHHHHH */
 }
@@ -85,7 +85,12 @@ table {
 }
 
 #b_left img{
-	margin-top: 100px;
+	margin-top: 60px;
+}
+
+#b_left p {
+	font-size: 250%;
+	margin-top:20px;
 }
 
 #right{
@@ -136,7 +141,7 @@ div#visualization_cheeseburger {
 	margin-left:60px;
 }
 
-#day_calories, #cheeseburger_count {
+#day_calories, #cheeseburger_count , .red{
 	color: red;
 }
 
@@ -185,6 +190,18 @@ div#visualization_cheeseburger {
 	margin-left: 40px;
 }
 
+div#fullscreen {
+	background-color: #000;
+	height: 100%;
+	width: 100%;
+	top:0;
+	position: absolute;
+	z-index: 999;
+	color: #fff;
+	display: none;
+}
+
+
 .counter{
 	height: 30%;
 	width: 100%;
@@ -193,15 +210,15 @@ div#visualization_cheeseburger {
 }
 
 .counter h3{
-	font-size: 750%;
+	font-size: 1050%;
 	font-weight: bold;
 	text-shadow: 0px 1px 1px #333333;
-	margin-top: 16%;
+	margin-top: 11%;
 }
 
 .counter p{
 	 color: rgba(0, 0, 0, 0.7);
-	 font-size: 150%;
+	 font-size: 250%;
 }
 
 #ct_dag{
@@ -241,7 +258,7 @@ div#visualization_cheeseburger {
 }
 
 #ct_title{
-	height: 10%;
+	height: 8%;
 background: #eeeeee; /* Old browsers */
 background: -moz-linear-gradient(top, #eeeeee 0%, #d6d6d6 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
@@ -257,7 +274,7 @@ border-top: 1px solid #fff;
 	font-size: 250%;
 	font-weight: bold;
 	text-shadow: 0px 1px 0px #fff;
-	padding-top: 6%;
+	padding-top: 4%;
 	color: #434141;
 	text-align: center;
 }

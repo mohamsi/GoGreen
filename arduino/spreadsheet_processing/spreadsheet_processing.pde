@@ -41,8 +41,9 @@ void transmitData(float val) {
 void setup() {
   //Set up the serial port to read data
   //This code comes from example 11-8 of Getting Started with Processing
-  String arduinoPort = Serial.list()[1];
-  port = new Serial(this, arduinoPort, 9600);
+ // print(Serial.list());
+  //String arduinoPort = Serial.list()[0];
+  port = new Serial(this, "/dev/ttyACM0", 9600);
   port.bufferUntil('\n');
  // oldTime = millis();
   //Set up the google spreadsheet
@@ -81,12 +82,14 @@ void draw() {
   while (port.available() > 0) {
     buff = port.readStringUntil('\n');
   }
+  print(buff);
+  //print(1);
   if (buff != "") {
     if (buff.trim().equals("1")) {
       println("sending");
       transmitData(1);
     } else {
-      //println("other value " + buff);
+      println("other value " + buff);
     }
   }
   buff = "";

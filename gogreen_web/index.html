@@ -147,13 +147,24 @@
 		$("#counter_total").html(data.getValue(0,6));
 		$("#pizza_percent").html(data.getValue(10,1));
 		$("#day_calories").html(data.getValue(1,1));
+		$("#total_calories").html(data.getValue(1,6));
+		$("#pizza_calories").html(data.getValue(1,1));
 		$("#cheeseburger_count").html(data.getValue(3,1));
+		$("#total_cheeseburger_count").html(data.getValue(3,6));
+		
 
       }
       
       
       realtimeNumber();
-	  
+	
+
+	showPremieScreen = function() {
+		//show the fullscreen div
+		$("#fullscreen").show();
+		//hide it 30 seconds later
+		window.setTimeout(function(){$("#fullscreen").hide();},30000);
+	};
 
     </script>
     <script>
@@ -169,7 +180,7 @@
 						start : 6,
 						animationComplete: function(current) {
             				// Get the "current" slide number
-            				console.log(current);
+            				//console.log(current);
 							if(current == 5) {
 								$("#ct_uke").css({"background":"#ccc","color":"#eee"});
 								$("#ct_mnd").css({"background":"#ccc","color":"#eee"});
@@ -183,6 +194,7 @@
 					}
 				);
 				GGMap.init( 1045937 );
+
             });
 	</script>
 </head>
@@ -200,7 +212,10 @@
 				<div id="slide2" class="slide">
 						<div id="visualization_cheeseburger" class="visualization">
 							<div class="vis_left">
+								<!--
 								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
+								-->
+								<div>I dag er det forbrent <span id="day_calories"></span> kalorier, som tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
 							</div>
 							<div class="vis_right"><img src="cheeseburger.png"/></div>
 						</div>
@@ -214,10 +229,12 @@
 				<div id="slide5" class="slide">
 						<div id="visualization_pizza" class="visualization">
 							<div id="pizza_container"></div>
-							<h2>Total forbrente kalorier i dag<br> tilsvarer <span id="pizza_percent"></span>% av en grandiosa pizza!</h2>
+							<!--<h2>Total forbrente kalorier i dag<br> tilsvarer <span id="pizza_percent"></span>% av en grandiosa pizza!</h2>-->
+							<h2>I dag er det forbrent <span id="pizza_calories" class="red"></span> kalorier,<br> som tilsvarer <span id="pizza_percent" class="red"></span>% av en grandiosa pizza!</h2>
 						</div>
 				</div>
 				<div id="slide6" class="slide">
+
 					<div class="visualization">
 						<div class="vis_left">
 						<div>Sammen har vi gått x km, som er x% til paris!</div>
@@ -227,18 +244,35 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			
+
+		
+
+
+				<div id="slide7" class="slide">				
+					<div id="visualization_cheeseburger" class="visualization">
+							<div class="vis_left">
+								<!--
+								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
+								-->
+								<div>Total er det forbrent <span id="total_calories" class="red"></span> kalorier, som tilsvarer <span id="total_cheeseburger_count" class="red"></span> cheeseburgere!</div>
+							</div>
+							<div class="vis_right"><img src="cheeseburger.png"/></div>
+						</div>
+					</div>				
+				</div>
 
 		</div>
+		<div id="fullscreen"><p>some placeholder text</p></div>
 
 		<div id="bottom">
 			<div id="b_left">
 				<img src="img/logo.png" alt="GoGreen logo"  /> <!-- We could probably edit this URL in JS ;) -->
-				
+				<p>http://goo.gl/QUvxq</p>
 			</div>
 			<div id="b_right">
-				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fwww.uio.no" alt="qrcode"  />
-				<p>http://www.uio.no/</p>
+				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fheim.ifi.uio.no%2Fmohamsi%2FGoGreen%2F" alt="qrcode"  />
+				
 			</div>
 		</div>
 	</div>

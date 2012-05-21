@@ -24,6 +24,9 @@ boolean calibration = true;
 
 long timerStart = millis();
 
+long lastBufferAddition = millis();
+long lastSensorB = millis();
+
 void setup() {
   pinMode(ledPin,OUTPUT);
   digitalWrite(ledPin,LOW);
@@ -80,6 +83,12 @@ long getDistance(int ping, int pong) {
 
 //add to buffer the current time indicating when someone passed sensor A
 void addToBuffer() {
+  if ( millis() - lastBufferAddition < 1000) {
+     return; 
+  }
+  Serial.print("buffer plus 1 ");
+  Serial.println(millis());
+  lastBufferAddition = millis();
   int i;
   for ( i = 0; i < bufferLength; i++ ) {
       if (buffer[i] == 0) {
@@ -88,12 +97,16 @@ void addToBuffer() {
               break;
       }
   }
+  Serial.print("added to buffer ");
+  Serial.print(bufferCounter);
+  Serial.print(" ");
+  printBuffer();
 }
 
 //make sure we always remove the oldest non-zero value (sort the buffer first)
 void removeFromBuffer() {
   isort(buffer,bufferLength);
-  for (int i = bufferLength-1; i <= 0; i--) {
+  for (int i = bufferLength-1; i >= 0; i--) {
     if(buffer[i] == 0) {
       continue;
     } else {
@@ -102,12 +115,17 @@ void removeFromBuffer() {
       break;
     }
   }
+  Serial.print("removed from buffer ");
+  Serial.print(bufferCounter);
+  Serial.print(" ");  
+  printBuffer();
 }
 
 void printBuffer() {
 	Serial.print("Buffer: ");	
 	for (int i = 0; i<bufferLength; i++) {
 		Serial.print(buffer[i]);
+                Serial.print(" ");
 	}
 	Serial.println();
 }
@@ -117,7 +135,7 @@ void cleanBuffer() {
   int i;
   for ( i = 0; i < bufferLength; i++ ) {
       if (buffer[i] != 0) {
-          if ( millis() - buffer[i] > 2000 ) {
+          if ( millis() - buffer[i] > 4000 ) {
              // Serial.println("removing from buffer");
               buffer[i] = 0;
               bufferCounter--;
@@ -166,29 +184,39 @@ void loop() {
   // SPAM BLOCK
   /*
   Serial.print("A: ");
+  Serial.print(millis());
+  Serial.print(" ");
   Serial.println(cm);
-    */
+   
   Serial.print("B: ");
+  Serial.print(millis());
+  Serial.print(" ");
+   
   Serial.println(cm2);
- 
-  //delay(250);
+ */
+  //delay(25);
   
     //check if someone passed sensor A
 	//		we ignore values higher than 300
     if (lastValue < threshold && cm >= threshold && cm < 300) {
       addToBuffer();
-      Serial.println("buffer plus 1");      
+      
     } 
     
 	//check if someone passed sensor B after passing sensor A
 	//		we ignore values higher than 300
-   if ( ((lastValue2 < threshold2) && (cm2 >= threshold2)) && (bufferCounter > 0) && cm < 300) {
+   if ( ((lastValue2 < threshold2) && (cm2 >= threshold2)) && (bufferCounter > 0) && cm2 < 300 && (millis() - lastSensorB > 1000)) {
       	total = total++;
-		Serial.println("1");
+	Serial.println("1");
+        lastSensorB = millis();
         letThereBeLight();
         removeFromBuffer();
       	//bufferCounter--;
       	//buffer[0] = 0;
+    } else if (((lastValue2 < threshold2) && (cm2 >= threshold2))) {
+      //Serial.print("whats wrong with you? ");
+      //Serial.print(bufferCounter);
+      
     }
     
     lastValue2 = cm2;

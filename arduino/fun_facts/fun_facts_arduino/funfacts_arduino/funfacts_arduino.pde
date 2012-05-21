@@ -5,7 +5,7 @@
 
 const int sonarPin = 10;
 const int sendDelay = 200;
-int senseRange = 40; 
+int senseRange = 200; 
 
 void setup() {
   
