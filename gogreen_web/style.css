@@ -115,6 +115,13 @@ table {
 	width : 50%;
 }
 
+div#GGMap {
+	height: 600px;
+	width: 600px;
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
 div#pizza_container {
 
 	margin: 0px auto;

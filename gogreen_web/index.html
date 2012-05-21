@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="js/jquery.js"></script>
     <script type="text/javascript" src="js/slides.jquery.js"></script>
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyB7c4fKDtX34rksjO-Zh6SatbzduqIwHQQ" type="text/javascript"></script>
+	<script type="text/javascript" src="js/GGMaps.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load('visualization', '1', {packages: ["corechart"]});
@@ -164,21 +166,23 @@
 						pagination : false,
 						generatePagination: false,
 						hoverPause: true,
+						start : 6,
 						animationComplete: function(current) {
             				// Get the "current" slide number
             				console.log(current);
 							if(current == 5) {
 								$("#ct_uke").css({"background":"#ccc","color":"#eee"});
 								$("#ct_mnd").css({"background":"#ccc","color":"#eee"});
-								$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
+								//$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
 							} else {
 								$("#ct_uke").css({"background":"","color":""});
 								$("#ct_mnd").css({"background":"","color":""});
-								$("#ct_dag").css({"margin":"","padding":""});
+								//$("#ct_dag").css({"margin":"","padding":""});
 							}
         				}
 					}
 				);
+				GGMap.init( 1045937 );
             });
 	</script>
 </head>
@@ -213,9 +217,20 @@
 							<h2>Total forbrente kalorier i dag<br> tilsvarer <span id="pizza_percent"></span>% av en grandiosa pizza!</h2>
 						</div>
 				</div>
+				<div id="slide6" class="slide">
+					<div class="visualization">
+						<div class="vis_left">
+						<div>Sammen har vi gått x km, som er x% til paris!</div>
+						</div>
+						<div class="vis_right">				
+							<div id="GGMap"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 		</div>
+
 		<div id="bottom">
 			<div id="b_left">
 				<img src="img/logo.png" alt="GoGreen logo"  /> <!-- We could probably edit this URL in JS ;) -->
