@@ -132,13 +132,17 @@ div#pizza_container {
 	margin: 0px auto;
 	height: 650px;
 	width: 650px;
-	background-image: url('pizza-whole.png');
+	background-image: url('images/pizza-whole.png');
 }
 
-div#visualization_cheeseburger {
+div#visualization_cheeseburger, div#visualization_cheeseburger_total, div#visualization_map {
 	margin-top:350px;
 	margin-right:30px;
 	margin-left:60px;
+}
+
+div.visualization_map.vis_left {
+	margin-top:350px;
 }
 
 #day_calories, #cheeseburger_count , .red{
