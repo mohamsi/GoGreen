@@ -284,6 +284,28 @@ border-top: 1px solid #fff;
 }
 
 
+#links{
+	position: absolute;
+	left: 10px;
+	top: 0px;
+	z-index: 999;
+}
+
+#links a{
+	padding: 8px;
+	color: #616161;
+	text-decoration: none;
+	background: #eff6fb;
+	border-bottom: 1px solid #bcd9ee;
+	display: block;
+}
+
+#links a:hover{
+	background: #fff;
+	border-bottom: 1px solid #8dbde0;
+	color: #4d4d4d;
+}
+
 
 
 
