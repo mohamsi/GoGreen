@@ -162,7 +162,8 @@
       
       realtimeNumber();
 	
-
+	
+	
 	showPremieScreen = function() {
 		//show the fullscreen div
 		$("#fullscreen").show();
@@ -185,7 +186,7 @@
 						animationComplete: function(current) {
             				// Get the "current" slide number
             				//console.log(current);
-							if(current == 5) {
+					/*		if(current == 5) {
 								$("#ct_uke").css({"background":"#ccc","color":"#eee"});
 								$("#ct_mnd").css({"background":"#ccc","color":"#eee"});
 								//$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
@@ -193,11 +194,17 @@
 								$("#ct_uke").css({"background":"","color":""});
 								$("#ct_mnd").css({"background":"","color":""});
 								//$("#ct_dag").css({"margin":"","padding":""});
-							}
+							}*/
         				}
 					}
 				);
-				GGMap.init( 50000 );
+		//initialize GGmap
+		GGMap.init( 50000 );
+		//hide links if using for top screen display
+		if (window.location.hash == "#fullscreen") {
+			$("#fullscreen").hide();
+		}
+				
 
             });
 	</script>
