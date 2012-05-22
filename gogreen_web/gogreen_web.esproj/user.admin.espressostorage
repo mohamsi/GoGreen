@@ -20,7 +20,9 @@
 	<key>com.macrabbit.Espresso.FileManager.FileControllerState</key>
 	<dict>
 		<key>ExpandedURLs</key>
-		<array/>
+		<array>
+			<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/img</string>
+		</array>
 	</dict>
 	<key>com.macrabbit.Espresso.Publisher.DisclosureCollapsed</key>
 	<false/>
@@ -43,6 +45,18 @@
 			<dict>
 				<key>DocumentURL</key>
 				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/about.html</string>
+				<key>StateType</key>
+				<string>DefaultTab</string>
+			</dict>
+			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/index.html</string>
+				<key>StateType</key>
+				<string>DefaultTab</string>
+			</dict>
+			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/style.css</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>

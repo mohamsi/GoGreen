@@ -307,6 +307,11 @@ border-top: 1px solid #fff;
 	color: #4d4d4d;
 }
 
+#fullscreen{
+	width: 1920px;
+	height: 1200px;
+	background: url('img/Premier.png');
+}
 
 
 
