@@ -15,8 +15,8 @@ PImage currentImage;
 PImage nextImage;
 
 void setup() {
-  String arduinoPort = Serial.list()[1];
-  port = new Serial(this, arduinoPort, 9600); 
+  //String arduinoPort = Serial.list()[1];
+  port = new Serial(this, "/dev/ttyACM0", 9600); 
   port.bufferUntil('\n');
   for (int i=0; i<imageCount; i++) {
     images[i] = loadImage(imageFiles[i]);
@@ -41,6 +41,7 @@ void draw() {
     while (port.available() > 0) {    
       buff = port.readStringUntil('\n');  
     }
+    print(buff);
     if (buff.trim().equals("1")) {
       println(buff);
       //funfacts = true;
@@ -74,7 +75,7 @@ void fadeInImage() {
  // println("fading");
   if (transparency1 > 0) {
     background(255);
-    transparency1-=30;
+    transparency1-=90;
     tint(255,255,255,transparency1);
     image(currentImage,0,0);
   } else {

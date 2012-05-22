@@ -14,17 +14,11 @@
 				<key>Title</key>
 				<string>GoGreen</string>
 				<key>URL</key>
-				<string>file:///Applications/XAMPP/xamppfiles/htdocs/gogreen_web/about.html</string>
+				<string>file:///Users/admin/GoGreen_GIT/GoGreen/gogreen_web/about.html</string>
 			</dict>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Applications/XAMPP/xamppfiles/htdocs/gogreen_web/interactive.css</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Applications/XAMPP/xamppfiles/htdocs/gogreen_web/about.html</string>
+				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/about.html</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>

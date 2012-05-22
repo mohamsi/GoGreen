@@ -1,28 +1,31 @@
-int fancyPingA = 2; //trigger
-int fancyPongA = 5; //echo
-int fancyPingB = 0; //trigger
-int fancyPongB = 0; //echo
+const int fancyPingA = 2; //trigger
+const int fancyPongA = 5; //echo
+const int fancyPingB = 12; //trigger
+const int fancyPongB = 8; //echo
 
 const int ledPin = 10;
   
 int total = 0;
-int emptyStair;
-int emptyStair2;
-int threshold;
-int threshold2;
-int lastValue; 
-int lastValue2;
-int deadSpace = 20;
-int passedFirst = 0;
-long previousMillis = 0;
-long interval = 1000;
 
-long buffer[10] = {0,0,0,0,0,0,0,0,0,0};
+long emptyStair;
+long emptyStair2;
+long threshold;
+long threshold2;
+long deadSpace = 10;
+
+long lastValue; 
+long lastValue2;
+
+const int bufferLength = 12;
+long buffer[bufferLength];
 int bufferCounter = 0;
 
+boolean calibration = true;
 
 long timerStart = millis();
-//boolean letThereBeLight;
+
+long lastBufferAddition = millis();
+long lastSensorB = millis();
 
 void setup() {
   pinMode(ledPin,OUTPUT);
@@ -31,15 +34,17 @@ void setup() {
   Serial.begin(9600); 
   Serial.print("Calibrating.\n");
   
-  while (millis () < 4000){
-    long d = getDistanceFancy(fancyPingA, fancyPongA);
-    long d2 = getDistanceFancy(fancyPingB, fancyPongB);
+  while (millis () < 5000){
+    long d = getDistance(fancyPingA, fancyPongA);
+    delay(50);
+    long d2 = getDistance(fancyPingB, fancyPongB);
     emptyStair = d;
     emptyStair2 = d2;
     lastValue = d;
     lastValue2 = d2;
   }
-  
+  calibration = false;
+
   threshold = emptyStair - deadSpace;
   threshold2 = emptyStair2 - deadSpace;
   Serial.print("Range: ");
@@ -51,9 +56,8 @@ void setup() {
   
 }
 
-long getDistanceFancy(int ping, int pong) {
+long getDistance(int ping, int pong) {
   long duration, inches, cm;
- //Serial.
   //// The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
   pinMode(ping, OUTPUT);
@@ -71,25 +75,80 @@ long getDistanceFancy(int ping, int pong) {
  
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
+  if (calibration) {
+	return constrain(cm, 5, 200);
+  }
   return cm;
 }
 
+//add to buffer the current time indicating when someone passed sensor A
 void addToBuffer() {
+  if ( millis() - lastBufferAddition < 1000) {
+     return; 
+  }
+  Serial.print("buffer plus 1 ");
+  Serial.println(millis());
+  lastBufferAddition = millis();
   int i;
-  for ( i = 0; i < 10; i++ ) {
+  for ( i = 0; i < bufferLength; i++ ) {
       if (buffer[i] == 0) {
               buffer[i] = millis();
               bufferCounter++;
               break;
       }
   }
+  Serial.print("added to buffer ");
+  Serial.print(bufferCounter);
+  Serial.print(" ");
+  printBuffer();
+}
+
+//make sure we always remove the oldest non-zero value (sort the buffer first)
+void removeFromBuffer() {
+  isort(buffer,bufferLength);
+  for (int i = bufferLength-1; i >= 0; i--) {
+    if(buffer[i] == 0) {
+      continue;
+    } else {
+      buffer[i] = 0;
+      bufferCounter--;
+      break;
+    }
+  }
+  Serial.print("removed from buffer ");
+  Serial.print(bufferCounter);
+  Serial.print(" ");  
+  printBuffer();
+}
+
+void printBuffer() {
+	Serial.print("Buffer: ");	
+	for (int i = 0; i<bufferLength; i++) {
+		Serial.print(buffer[i]);
+                Serial.print(" ");
+	}
+	Serial.println();
+}
+
+void cleanBuffer() {
+  //remove from the buffer any values that are older than 2000ms
+  int i;
+  for ( i = 0; i < bufferLength; i++ ) {
+      if (buffer[i] != 0) {
+          if ( millis() - buffer[i] > 4000 ) {
+             // Serial.println("removing from buffer");
+              buffer[i] = 0;
+              bufferCounter--;
+          }
+      }
+  }
 }
 
 boolean green = false;
 
+//check if we need to turn off the LED
 void led () {
     if (millis() - timerStart > 150) {
-      //timerStart = millis();
       digitalWrite(ledPin,LOW);
       green = false;
     } else {
@@ -97,9 +156,7 @@ void led () {
     }
 }
 
-
-
-
+//turn on the LED
 void letThereBeLight () {
     green = true;
     timerStart = millis();
@@ -108,57 +165,58 @@ void letThereBeLight () {
     
     
 void loop() {
+  //check if we need to turn off the led
   led();
-  //digitalWrite(ledPin,HIGH);
- // delay(500);
-  int i;
-  for ( i = 0; i < 6; i++ ) {
-      if (buffer[i] != 0) {
-          if ( millis() - buffer[i] > 2000 ) {
-             // Serial.println("removing from buffer");
-              buffer[i] = 0;
-              bufferCounter--;
-          }
-      }
-  }
+
+  //remove from the buffer any values that are older than 2000ms
+  cleanBuffer();
   
-  
-  //long cm = getD(sonarPin);
-  long cm = getDistanceFancy(fancyPingA, fancyPongA);
+  //get the distance for each sensor
+  //ignore values higher than threshold by setting them equal to threshold
+  long cm = getDistance(fancyPingA, fancyPongA);
+  if (cm > threshold)
+    cm = threshold;
   delay(5);
-  long cm2 = getDistanceFancy(fancyPingB, fancyPongB);
-  
+  long cm2 = getDistance(fancyPingB, fancyPongB);
+  if (cm2 > threshold2)
+    cm2 = threshold2;
+
   // SPAM BLOCK
-  
+  /*
   Serial.print("A: ");
+  Serial.print(millis());
+  Serial.print(" ");
   Serial.println(cm);
-  
+   
   Serial.print("B: ");
+  Serial.print(millis());
+  Serial.print(" ");
+   
   Serial.println(cm2);
+ */
+  //delay(25);
   
-  delay(250);
-  
-  
-    if (lastValue < threshold && cm >= threshold) {
-      //passedFirst++;
+    //check if someone passed sensor A
+	//		we ignore values higher than 300
+    if (lastValue < threshold && cm >= threshold && cm < 300) {
       addToBuffer();
-      //Serial.print("Passed first. \n");
-      //Serial.println(bufferCounter);
-      //Serial.println(passedFirst);
-      
       
     } 
     
-    if ( ((lastValue2 < threshold2) && (cm2 >= threshold)) && (bufferCounter > 0)) {
-      total = total++;
-      //Serial.print("Passed second. \nTotal: ");
-      //Serial.println(total);
+	//check if someone passed sensor B after passing sensor A
+	//		we ignore values higher than 300
+   if ( ((lastValue2 < threshold2) && (cm2 >= threshold2)) && (bufferCounter > 0) && cm2 < 300 && (millis() - lastSensorB > 1000)) {
+      	total = total++;
 	Serial.println("1");
+        lastSensorB = millis();
         letThereBeLight();
-      //passedFirst = passedFirst--;
-      //hasPassed = false;
-      bufferCounter--;
-      buffer[0] = 0;
+        removeFromBuffer();
+      	//bufferCounter--;
+      	//buffer[0] = 0;
+    } else if (((lastValue2 < threshold2) && (cm2 >= threshold2))) {
+      //Serial.print("whats wrong with you? ");
+      //Serial.print(bufferCounter);
+      
     }
     
     lastValue2 = cm2;
@@ -173,7 +231,6 @@ void loop() {
 void isort(long *a, int n){
 // *a is an array pointer function
 
-
   for (int i = 1; i < n; ++i)
   {
     long j = a[i];
@@ -187,8 +244,7 @@ void isort(long *a, int n){
 } 
 
 
-
 long microsecondsToCentimeters(long microseconds) {
-  return microseconds / 29 / 2;
+	return microseconds / 29 / 2;
 }
 
