@@ -160,6 +160,10 @@ a img{
 	border: none !important;
 }
 
+#top a img {
+	background: transparent;
+}
+
 ul{
 	line-height: 160%;
 	padding-left: 17px;
