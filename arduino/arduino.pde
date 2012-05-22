@@ -76,7 +76,7 @@ long getDistance(int ping, int pong) {
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
   if (calibration) {
-	return constrain(cm, 5, 200);
+	return constrain(cm, 5, 230);
   }
   return cm;
 }
