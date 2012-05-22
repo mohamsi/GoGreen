@@ -30,21 +30,19 @@
 		<array>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/about.html</string>
+				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/premie.html</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>
 			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/premie.css</string>
 				<key>StateType</key>
-				<string>PreviewTab</string>
-				<key>Title</key>
-				<string>GoGreen</string>
-				<key>URL</key>
-				<string>file:///Users/admin/GoGreen_GIT/GoGreen/gogreen_web/about.html</string>
+				<string>DefaultTab</string>
 			</dict>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/interactive.css</string>
+				<string>file://localhost/Users/admin/GoGreen_GIT/GoGreen/gogreen_web/about.html</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>

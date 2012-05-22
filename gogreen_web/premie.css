@@ -32,6 +32,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 	font: 100% "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: #fafafa;
 }
 ol, ul {
 	list-style: none;
@@ -53,7 +54,7 @@ q:before, q:after {
 
 #global_wrapper{
 	width: 100%;
-	height: 2000px;
+	height: 550px;
 	background: #fafafa repeat-x url('img/left_clear_sky.png');
 	font: 100% "Heletica Neue", Helvetica, Arial, sans-serif;
 	color: #000;
@@ -61,7 +62,7 @@ q:before, q:after {
 
 #wrapper{
 	width: 960px;
-	height: 1800px;
+	height: 355px;
 	margin: 0px auto;
 	background: repeat-x url('img/clouds.png');
 }
@@ -74,7 +75,7 @@ q:before, q:after {
 
 #main{
 	width: 100%;
-	height: 1800px;
+	height: 355px;
 	background: #fff;
 	border-radius: 3px; 
 	-moz-border-radius: 3px; 
@@ -175,14 +176,9 @@ ul li{
 	float: right;
 }
 
-
-
-
-
-
-
-
-
+iframe{
+	margin-left: -10px;
+}
 
 
 
