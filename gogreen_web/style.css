@@ -286,18 +286,19 @@ border-top: 1px solid #fff;
 
 #links{
 	position: absolute;
-	left: 10px;
 	top: 0px;
 	z-index: 999;
 }
 
 #links a{
-	padding: 8px;
+	padding: 16px 32px;
 	color: #616161;
 	text-decoration: none;
 	background: #eff6fb;
 	border-bottom: 1px solid #bcd9ee;
 	display: block;
+	font-size: 130%;
+	margin-left: 155px;
 }
 
 #links a:hover{
