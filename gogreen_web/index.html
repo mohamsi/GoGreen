@@ -40,7 +40,7 @@
           },
           containerId: 'pizza_container'
         });
-        wrapper.setRefreshInterval(1);
+        wrapper.setRefreshInterval(55);
         wrapper.draw();
       }
   	  google.setOnLoadCallback(makePizzaForHilde);
@@ -68,7 +68,7 @@
           },
           containerId: 'visualization_kalorier_personer'
         });
-        wrapper.setRefreshInterval(1);
+        wrapper.setRefreshInterval(55);
         wrapper.draw();
       }
   	  google.setOnLoadCallback(drawKalorierPersoner);
@@ -133,11 +133,10 @@
   $(function(){
                 $("#slideshow").slides(
 					{
-						play:10000,
+						play:15000,
 						bigTarget:true,
 						pagination : false,
 						generatePagination: false,
-						hoverPause: true,
 						start : 3,
 						animationComplete: function(current) {
             				// Get the "current" slide number
