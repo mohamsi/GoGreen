@@ -76,7 +76,7 @@ long getDistance(int ping, int pong) {
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
   if (calibration) {
-	return constrain(cm, 5, 200);
+	return constrain(cm, 5, 230);
   }
   return cm;
 }
@@ -86,8 +86,8 @@ void addToBuffer() {
   if ( millis() - lastBufferAddition < 1000) {
      return; 
   }
-  Serial.print("buffer plus 1 ");
-  Serial.println(millis());
+  //Serial.print("buffer plus 1 ");
+  //Serial.println(millis());
   lastBufferAddition = millis();
   int i;
   for ( i = 0; i < bufferLength; i++ ) {
@@ -97,10 +97,10 @@ void addToBuffer() {
               break;
       }
   }
-  Serial.print("added to buffer ");
-  Serial.print(bufferCounter);
-  Serial.print(" ");
-  printBuffer();
+  //Serial.println("added to buffer ");
+  //Serial.print(bufferCounter);
+  //Serial.print(" ");
+  //printBuffer();
 }
 
 //make sure we always remove the oldest non-zero value (sort the buffer first)
@@ -115,10 +115,10 @@ void removeFromBuffer() {
       break;
     }
   }
-  Serial.print("removed from buffer ");
-  Serial.print(bufferCounter);
-  Serial.print(" ");  
-  printBuffer();
+  //Serial.print("removed from buffer ");
+  //Serial.print(bufferCounter);
+  //Serial.print(" ");  
+  //printBuffer();
 }
 
 void printBuffer() {
