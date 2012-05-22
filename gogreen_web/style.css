@@ -63,7 +63,7 @@ table {
 
 #bottom {
 	width: 1080px;
-	margin: 0px auto 0px auto;
+	margin: 40px auto 0px auto;
 	
 	/* Needs some BIGASS EDITING for final release. AHHHHHH */
 }
@@ -85,7 +85,12 @@ table {
 }
 
 #b_left img{
-	margin-top: 100px;
+	margin-top: 60px;
+}
+
+#b_left p {
+	font-size: 250%;
+	margin-top:20px;
 }
 
 #right{
@@ -115,21 +120,32 @@ table {
 	width : 50%;
 }
 
+div#GGMap {
+	height: 600px;
+	width: 600px;
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
 div#pizza_container {
 
 	margin: 0px auto;
 	height: 650px;
 	width: 650px;
-	background-image: url('pizza-whole.png');
+	background-image: url('img/pizza-whole.png');
 }
 
-div#visualization_cheeseburger {
+div#visualization_cheeseburger, div#visualization_cheeseburger_total, div#visualization_map {
 	margin-top:350px;
 	margin-right:30px;
 	margin-left:60px;
 }
 
-#day_calories, #cheeseburger_count {
+div.visualization_map.vis_left {
+	margin-top:350px;
+}
+
+#day_calories, #cheeseburger_count , .red{
 	color: red;
 }
 
@@ -178,6 +194,18 @@ div#visualization_cheeseburger {
 	margin-left: 40px;
 }
 
+div#fullscreen {
+	background-color: #000;
+	height: 100%;
+	width: 100%;
+	top:0;
+	position: absolute;
+	z-index: 999;
+	color: #fff;
+	display: none;
+}
+
+
 .counter{
 	height: 30%;
 	width: 100%;
@@ -186,15 +214,15 @@ div#visualization_cheeseburger {
 }
 
 .counter h3{
-	font-size: 750%;
+	font-size: 1050%;
 	font-weight: bold;
 	text-shadow: 0px 1px 1px #333333;
-	margin-top: 16%;
+	margin-top: 11%;
 }
 
 .counter p{
 	 color: rgba(0, 0, 0, 0.7);
-	 font-size: 150%;
+	 font-size: 250%;
 }
 
 #ct_dag{
@@ -234,7 +262,7 @@ div#visualization_cheeseburger {
 }
 
 #ct_title{
-	height: 10%;
+	height: 8%;
 background: #eeeeee; /* Old browsers */
 background: -moz-linear-gradient(top, #eeeeee 0%, #d6d6d6 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
@@ -250,12 +278,40 @@ border-top: 1px solid #fff;
 	font-size: 250%;
 	font-weight: bold;
 	text-shadow: 0px 1px 0px #fff;
-	padding-top: 6%;
+	padding-top: 4%;
 	color: #434141;
 	text-align: center;
 }
 
 
+#links{
+	position: absolute;
+	top: 0px;
+	z-index: 999;
+}
+
+#links a{
+	padding: 16px 32px;
+	color: #616161;
+	text-decoration: none;
+	background: #eff6fb;
+	border-bottom: 1px solid #bcd9ee;
+	display: block;
+	font-size: 130%;
+	margin-left: 155px;
+}
+
+#links a:hover{
+	background: #fff;
+	border-bottom: 1px solid #8dbde0;
+	color: #4d4d4d;
+}
+
+#fullscreen{
+	width: 1920px;
+	height: 1200px;
+	background: url('img/Premier.png');
+}
 
 
 

@@ -82,7 +82,7 @@ void draw() {
   while (port.available() > 0) {
     buff = port.readStringUntil('\n');
   }
-  print(buff);
+  //print(buff);
   //print(1);
   if (buff != "") {
     if (buff.trim().equals("1")) {

@@ -1,0 +1,193 @@
+/*
+
+CSS RESET
+
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	font: 100% "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: #fafafa;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/*
+
+/CSS RESET
+
+*/
+
+#global_wrapper{
+	width: 100%;
+	height: 550px;
+	background: #fafafa repeat-x url('img/left_clear_sky.png');
+	font: 100% "Heletica Neue", Helvetica, Arial, sans-serif;
+	color: #000;
+}
+
+#wrapper{
+	width: 960px;
+	height: 355px;
+	margin: 0px auto;
+	background: repeat-x url('img/clouds.png');
+}
+
+#top{
+	width: 100%;
+	height: 100px;
+	padding-top: 50px;
+}
+
+#main{
+	width: 100%;
+	height: 385px;
+	background: #fff;
+	border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	border: 1px solid #FFFFFF;
+	-webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);	
+}
+
+#main img{
+	padding: 3px;
+	border: 1px solid #ebebeb;
+}
+
+#left{
+	width: 600px;
+	height: 100%;
+	float: left;
+	padding: 0px 30px 25px 25px;
+}
+
+#right{
+	width: 240px;
+	height: 100%;
+	float: right;
+	padding: 0px 30px;
+	background: #f9f9f9;
+	border-left: 1px dashed #e2e2e2;
+}
+
+img.floatLeft{
+	float: left;
+	margin-right: 18px;
+}
+
+img.override{
+	border: none !important;
+	padding: 0px !important;
+}
+
+img.icon{
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+h2{
+	font: bold italic 200% Georgia, serif;
+	//letter-spacing: -1pt;
+	color: #264c66;
+}
+
+h3{
+	font: bold 170% Arial, sans-serif;
+	color: #4a4a4a;
+	margin: 25px 0px 17px 0px;
+}
+
+p{
+	font-size: 90%;
+	line-height: 160%;
+	color: #616161;
+	margin-bottom: 12px;
+}
+
+a{
+	color: #616161;
+	text-decoration: none;
+	background: #eff6fb;
+	border-bottom: 1px solid #bcd9ee;
+	padding: 1px;
+}
+
+a:hover{
+	background: #d8ebf8;
+	border-bottom: 1px solid #8dbde0;
+	color: #4d4d4d;
+}
+
+a img{
+	background: #eff6fb;
+	padding: 3px;
+	border: none !important;
+}
+
+#top a img {
+	background: transparent;
+}
+
+ul{
+	line-height: 160%;
+	padding-left: 17px;
+}
+
+ul li{
+	font-size: 90%;
+	color: #616161;
+	list-style-type: circle;
+}
+
+#top h2{
+	margin-top: 10px;
+	float: right;
+}
+
+iframe{
+	margin-left: -10px;
+}
+
+
+
+
+
+
+
+

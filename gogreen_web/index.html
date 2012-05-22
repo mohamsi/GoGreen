@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="js/jquery.js"></script>
     <script type="text/javascript" src="js/slides.jquery.js"></script>
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyB7c4fKDtX34rksjO-Zh6SatbzduqIwHQQ" type="text/javascript"></script>
+	<script type="text/javascript" src="js/GGMaps.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load('visualization', '1', {packages: ["corechart"]});
@@ -59,7 +61,7 @@
           		easing: 'in'
           	},
 		legend:{
-			position: 'bottom'
+			position: 'right'
 		},
 		width: 1200,
 		height: 750
@@ -71,56 +73,9 @@
       }
   	  google.setOnLoadCallback(drawKalorierPersoner);
     
-      function drawAntallKalorier() {
-        var wrapper = new google.visualization.ChartWrapper({
-			//dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A18%3AC19&headers=-1', //kalorier
-			dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&range=A22%3AB24&headers=-1',
-          chartType: 'ColumnChart',
-          options:{
-          	title : 'Kalorier brent',
-			backgroundColor: { fill:'transparent' },
-          	animation:{
-          		duration: 300,
-          		easing: 'in'
-          	},
-		legend:{
-			position: 'bottom'
-		},
-		width: 1200,
-		height: 750
-          },
-          containerId: 'visualization_kalorier'
-        });
-        wrapper.setRefreshInterval(1);
-        wrapper.draw();
-      }
-  	  google.setOnLoadCallback(drawAntallKalorier);
 
 
-      function drawAntallPersoner() {
-        var wrapper = new google.visualization.ChartWrapper({
-          dataSourceUrl: 'https://docs.google.com/spreadsheet/tq?range=summary!A1%3AA2%2Csummary!C1%3AD2&key=0Av66tTSXdeeVdFBJNGhRRmFHYkRmcmdpdERFbG1DbWc&gid=5&headers=-1', //antall personer
-          chartType: 'ColumnChart',
-          options:{
-          	title : 'Antall personer',
-			backgroundColor: { fill:'transparent' },
-          	animation:{
-          		duration: 300,
-          		easing: 'in'
-          	},
-		legend:{
-			position: 'right'
-		},
-		width: 1200,
-		height: 750
-          },
-		chartArea:{left:0,top:0,width:"100%",height:"100%"},
-          containerId: 'visualization_personer'
-        });
-        wrapper.setRefreshInterval(1);
-        wrapper.draw();
-      }
-  	  google.setOnLoadCallback(drawAntallPersoner);
+
  
       
       function realtimeNumber() {
@@ -140,18 +95,37 @@
         }
       
         var data = response.getDataTable();
+		GGMap.update(data.getValue(6,6));
+		//$("#GGMap").empty();
+		//GGMap.init(data.getValue(6,6));
 		$("#counter_day").html(data.getValue(0,1));
 		$("#counter_month").html(data.getValue(0,3));
 		$("#counter_total").html(data.getValue(0,6));
 		$("#pizza_percent").html(data.getValue(10,1));
 		$("#day_calories").html(data.getValue(1,1));
+		$("#total_calories").html(data.getValue(1,6));
+		$("#pizza_calories").html(data.getValue(1,1));
 		$("#cheeseburger_count").html(data.getValue(3,1));
+		$("#total_cheeseburger_count").html(data.getValue(3,6));
+		$("#total_distance").html(data.getValue(6,6));
+		$("#target_city").html(GGMap.destination[0]);
+		$("#city_percent").html(Math.round(data.getValue(6,6)/GGMap.destination[2] * 10000)/100);
+		//TODO update map here
+
 
       }
       
       
       realtimeNumber();
-	  
+	
+	
+	
+	showPremieScreen = function() {
+		//show the fullscreen div
+		$("#fullscreen").show();
+		//hide it 30 seconds later
+		window.setTimeout(function(){$("#fullscreen").hide();},30000);
+	};
 
     </script>
     <script>
@@ -164,66 +138,87 @@
 						pagination : false,
 						generatePagination: false,
 						hoverPause: true,
+						start : 3,
 						animationComplete: function(current) {
             				// Get the "current" slide number
-            				console.log(current);
-							if(current == 5) {
+            				//console.log(current);
+					/*		if(current == 5) {
 								$("#ct_uke").css({"background":"#ccc","color":"#eee"});
 								$("#ct_mnd").css({"background":"#ccc","color":"#eee"});
 								//$("#ct_dag").css({"margin":"0 0 0 -30px","padding":"0 30px 0 0"});
 							} else {
 								$("#ct_uke").css({"background":"","color":""});
 								$("#ct_mnd").css({"background":"","color":""});
-								$("#ct_dag").css({"margin":"","padding":""});
-							}
+								//$("#ct_dag").css({"margin":"","padding":""});
+							}*/
         				}
 					}
 				);
+		//initialize GGmap
+		GGMap.init( 50000 );
+		//hide links if using for top screen display
+		if (window.location.hash == "#fullscreen") {
+			$("#links").hide();
+		}
+				
+
             });
 	</script>
 </head>
 <body>
 
-
+<div id="fullscreen"></div>
 <div id="left">
 	<div id="top">
+		<div id="links">
+			<a href="about.html">Mer info om prosjektet</a>
+		</div>
 		<div id="slideshow">
 			<h1>Takk for at du tok trappa opp!</h1>
 			<div class="slides_container">
-				<div id="slide1" class="slide">			
-					<div id="visualization_personer" class="visualization"></div>
+				<div id="slide1" class="slide">
+					<div id="visualization_kalorier_personer" class="visualization"></div>
 				</div>
 				<div id="slide2" class="slide">
-						<div id="visualization_cheeseburger" class="visualization">
-							<div class="vis_left">
-								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
-							</div>
-							<div class="vis_right"><img src="cheeseburger.png"/></div>
+						<div id="visualization_pizza" class="visualization">
+							<div id="pizza_container"></div>
+							<!--<h2>Total forbrente kalorier i dag<br> tilsvarer <span id="pizza_percent"></span>% av en grandiosa pizza!</h2>-->
+							<h2>I dag er det forbrent <span id="pizza_calories" class="red"></span> kalorier,<br> som tilsvarer <span id="pizza_percent" class="red"></span>% av en grandiosa pizza!</h2>
 						</div>
 				</div>
 				<div id="slide3" class="slide">
-					<div id="visualization_kalorier" class="visualization"></div>
-				</div>
-				<div id="slide4" class="slide">
-					<div id="visualization_kalorier_personer" class="visualization"></div>
-				</div>
-				<div id="slide5" class="slide">
-						<div id="visualization_pizza" class="visualization">
-							<div id="pizza_container"></div>
-							<h2>Total forbrente kalorier i dag<br> tilsvarer <span id="pizza_percent"></span>% av en grandiosa pizza!</h2>
+					<div class="visualization">
+						<div class="vis_left visualization_map">
+						<div>Sammen har vi gått<br> <span id="total_distance" class="red"></span> km, som er <span id="city_percent" class="red"></span>% til <span id="target_city" class="red"></span>!</div>
 						</div>
+						<div class="vis_right visualization_map">				
+							<div id="GGMap"></div>
+						</div>
+					</div>
 				</div>
-			</div>
-
+				<div id="slide4" class="slide">				
+					<div id="visualization_cheeseburger_total" class="visualization">
+							<div class="vis_left">
+								<!--
+								<div><span id="day_calories"></span> forbrente kalorier i dag, tilsvarer <span id="cheeseburger_count"></span> cheeseburgere!</div>
+								-->
+								<div>Total er det forbrent <span id="total_calories" class="red"></span> kalorier, som tilsvarer <span id="total_cheeseburger_count" class="red"></span> cheeseburgere!</div>
+							</div>
+							<div class="vis_right"><img src="img/cheeseburger.png"/></div>
+						</div>
+					</div>				
+				</div>
 		</div>
+		<div id="fullscreen"><p>some placeholder text</p></div>
+
 		<div id="bottom">
 			<div id="b_left">
 				<img src="img/logo.png" alt="GoGreen logo"  /> <!-- We could probably edit this URL in JS ;) -->
-				
+				<p>http://goo.gl/Cz1F7</p>
 			</div>
 			<div id="b_right">
-				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fwww.uio.no" alt="qrcode"  />
-				<p>http://www.uio.no/</p>
+				<img src="http://qrcode.kaywa.com/img.php?s=5&d=http%3A%2F%2Fheim.ifi.uio.no%2Fhildbrei%2FGoGreen" alt="qrcode"  />
+				
 			</div>
 		</div>
 	</div>
